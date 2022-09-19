@@ -12,7 +12,7 @@
       </svg>
     </div>
     <div class='col-12 mt-5 d-flex justify-content-center align-items-stretch gap-3 flex-wrap'>
-      <ProductCard v-for='product of store.products' :product='product' :key='product.name' :addToCart='addToCart' />
+      <ProductCard v-for='product of store.products' :product='product' :key='product.id' :addToCart='addToCart' />
     </div>
   </div>
 </template>

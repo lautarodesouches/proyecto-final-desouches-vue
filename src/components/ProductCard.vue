@@ -2,7 +2,7 @@
   <div class='card p-2 border border-secondary rounded bg-light cursor-pointer'>
     <h5 class='title'>{{product.name}}</h5>
     <img src="">
-    <h5 class='price'>${{product.price}}</h5>
+    <h5 class='price'>${{product.price - (product.price * product.discount / 100)}}</h5>
     <button class='btn btn-primary' @click='addToCart(product)'>Añadir</button>
   </div>
 </template>
@@ -13,6 +13,11 @@ export default {
   props: {
     product: Object,
     addToCart: Function
+  },
+  data() {
+    return {
+      price: this.product.price - (this.product.price * this.product.discount / 100)
+    }
   }
 }
 </script>

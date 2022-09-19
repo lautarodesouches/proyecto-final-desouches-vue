@@ -14,7 +14,7 @@
   </main>
   <footer class='footer row align-items-center justify-content-center text-center'>
     <div class='col-12 col-md-6'>
-      
+
     </div>
     <div class='col-12 col-md-6'>
       <span>Proyecto final Vue</span>
@@ -39,7 +39,7 @@ export default {
     UserLogin,
     UserRegister,
     CartIcon
-}
+  }
 }
 </script>
 <!------------------------------------------------------------------------------------------->
@@ -53,6 +53,7 @@ export default {
 
 .header {
   margin: 0;
+  padding: 0;
   width: 100vw;
   height: 6vh;
   background-color: var(--secondary-bg);
@@ -60,13 +61,17 @@ export default {
 }
 
 .main {
+  margin: 0;
+  padding: 0;
   width: 100vw;
-  height: 88vh;
+  min-height: 88vh;
   background-color: var(--primary-bg);
   color: var(--primary-text);
 }
 
 .footer {
+  margin: 0;
+  padding: 0;
   width: 100vw;
   height: 6vh;
   background-color: var(--secondary-bg);

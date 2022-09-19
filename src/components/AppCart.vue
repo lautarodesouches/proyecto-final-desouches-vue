@@ -1,10 +1,10 @@
 <template>
-  <h2>Product List</h2>
+  <h2>Cart</h2>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
 export default {
-  name: 'ProductList',
+  name: 'AppCart',
   props: {
     msg: String
   }

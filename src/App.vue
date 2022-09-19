@@ -1,44 +1,43 @@
 <template>
-  <header class='header row align-items-center justify-content-center text-center'>
-    <div class='col-12 col-md-4'>PeticiónIpsoFacto</div>
-    <div class='col-12 col-md-4'>Ubicacion</div>
-    <div class='col-12 col-md-4'>
-      <CartIcon :cartLength='1' />
-    </div>
-  </header>
+  <Header :cart='cart' />
   <main class='main'>
-    <CustomInfo msg="Welcome to Your Vue.js App" />
-    <ProductList msg="Welcome to Your Vue.js App" />
-    <UserLogin msg="Welcome to Your Vue.js App" />
-    <UserRegister msg="Welcome to Your Vue.js App" />
+    <StoreDetail v-for='store of data' :key='store' :store='store' :addToCart='addToCart' />
+    <!-- <CustomInfo :product='data[0].products[0]' /> -->
+    <!-- <UserLogin msg="Welcome to Your Vue.js App" /> -->
+    <!-- <UserRegister msg="Welcome to Your Vue.js App" /> -->
   </main>
-  <footer class='footer row align-items-center justify-content-center text-center'>
-    <div class='col-12 col-md-6'>
-
-    </div>
-    <div class='col-12 col-md-6'>
-      <span>Proyecto final Vue</span>
-    </div>
-  </footer>
+  <Footer />
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import CustomInfo from './components/CustomInfo.vue'
-import ProductList from './components/ProductList.vue'
-import UserLogin from './components/UserLogin.vue'
-import UserRegister from './components/UserRegister.vue'
-import CartIcon from './components/CartIcon.vue'
+import data from './utils/data.json'
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+import StoreDetail from './components/StoreDetail.vue'
+/* import CustomInfo from './components/CustomInfo.vue' */
+/* import UserLogin from './components/UserLogin.vue' */
+/* import UserRegister from './components/UserRegister.vue' */
 
 export default {
   name: 'App',
   components: {
-    CustomInfo,
-    ProductList,
-    UserLogin,
-    UserRegister,
-    CartIcon
+    Footer,
+    Header,
+    StoreDetail
+  },
+  data() {
+    return {
+      data,
+      cart: []
+    }
+  },
+  methods: {
+    addToCart(product) {
+      this.cart.push(product)
+      console.log(this.cart);
+    }
   }
 }
 </script>
@@ -62,7 +61,7 @@ export default {
 
 .main {
   margin: 0;
-  padding: 0;
+  padding: 3rem 1rem;
   width: 100vw;
   min-height: 88vh;
   background-color: var(--primary-bg);
@@ -76,5 +75,9 @@ export default {
   height: 6vh;
   background-color: var(--secondary-bg);
   color: var(--secondary-text);
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

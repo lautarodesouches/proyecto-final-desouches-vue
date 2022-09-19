@@ -16,7 +16,7 @@
       <small id="repeatPasswordHelp" class="form-text text-danger">* Error!</small>
     </div>
     <div class='d-flex justify-content-center'>
-      <button type="submit" class="btn btn-primary">Ingresar</button>
+      <button type="submit" class="btn btn-primary">Registrarse</button>
     </div>
   </form>
 </template>

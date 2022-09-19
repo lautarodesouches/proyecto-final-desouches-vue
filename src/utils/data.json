@@ -1,0 +1,170 @@
+[
+    {
+        "name": "Misifusi Empanadas",
+        "stars": 5.0,
+        "products": [
+            {
+                "name": "Empanada de carne",
+                "price": 10,
+                "discount": 0,
+                "sales": 59
+            },
+            {
+                "name": "Empanada de pollo",
+                "price": 9,
+                "discount": 0,
+                "sales": 73
+            },
+            {
+                "name": "Empanada de verdura",
+                "price": 8,
+                "discount": 10,
+                "sales": 0
+            },
+            {
+                "name": "Empanada de atún",
+                "price": 9,
+                "discount": 0,
+                "sales": 3
+            },
+            {
+                "name": "Empanada de J&Q",
+                "price": 10,
+                "discount": 5,
+                "sales": 15
+            }
+        ]
+    },
+    {
+        "name": "Pizzamente",
+        "stars": 4.8,
+        "products": [
+            {
+                "name": "Pizza cuatro quesos",
+                "price": 25,
+                "discount": 3,
+                "sales": 34
+            },
+            {
+                "name": "Pizza de pepperoni",
+                "price": 21,
+                "discount": 0,
+                "sales": 85
+            },
+            {
+                "name": "Pizza hawaiana",
+                "price": 20,
+                "discount": 15,
+                "sales": 0
+            },
+            {
+                "name": "Pizza napolitana",
+                "price": 21,
+                "discount": 0,
+                "sales": 103
+            },
+            {
+                "name": "Pizza fugazza",
+                "price": 19,
+                "discount": 0,
+                "sales": 72
+            }
+        ]
+    },
+    {
+        "name": "Soul Helados",
+        "stars": 4.9,
+        "products": [
+            {
+                "name": "Helado 1/2 kg",
+                "price": 10,
+                "discount": 0,
+                "sales": 163
+            },
+            {
+                "name": "Balde helado 5 L",
+                "price": 50,
+                "discount": 10,
+                "sales": 84
+            },
+            {
+                "name": "Cucuruchos x 3",
+                "price": 1,
+                "discount": 0,
+                "sales": 305
+            },
+            {
+                "name": "Helado 1 kg",
+                "price": 19,
+                "discount": 5,
+                "sales": 457
+            },
+            {
+                "name": "Helado 1/4 kg",
+                "price": 6,
+                "discount": 0,
+                "sales": 53
+            },
+            {
+                "name": "Balde helado 3 L",
+                "price": 33,
+                "discount": 7,
+                "sales": 393
+            }
+        ]
+    },
+    {
+        "name": "Hamburguesas Magna",
+        "stars": 4.6,
+        "products": [
+            {
+                "name": "Hamburguesa con queso",
+                "price": 9,
+                "discount": 3,
+                "sales": 782
+            },
+            {
+                "name": "Hamburguesa clásica",
+                "price": 8,
+                "discount": 0,
+                "sales": 935
+            },
+            {
+                "name": "Nuggets de pollo x 4",
+                "price": 9,
+                "discount": 0,
+                "sales": 561
+            }
+        ]
+    },
+    {
+        "name": "De Todo Un Poco",
+        "stars": 4.5,
+        "products": [
+            {
+                "name": "Hamburguesa clásica",
+                "price": 8,
+                "discount": 5,
+                "sales": 434
+            },
+            {
+                "name": "Balde helado 3 L",
+                "price": 35,
+                "discount": 10,
+                "sales": 32
+            },
+            {
+                "name": "Pizza muzzarella",
+                "price": 10,
+                "discount": 8,
+                "sales": 823
+            },
+            {
+                "name": "Empanada de carne",
+                "price": 11,
+                "discount": 11,
+                "sales": 82
+            }
+        ]
+    }
+]

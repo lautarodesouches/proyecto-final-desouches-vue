@@ -18,7 +18,7 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
-import ProductCard from './ProductCard.vue';
+import ProductCard from '../components/ProductCard.vue'
 export default {
   name: "StoreDetail",
   props: {

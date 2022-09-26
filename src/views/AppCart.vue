@@ -4,6 +4,20 @@
       <h2>Carrito</h2>
     </div>
     <div class='my-5'>
+      <div class="row text-center mb-3">
+        <div class="col-3">
+          <h5>Nombre</h5>
+        </div>
+        <div class="col-3">
+          <h5>Descripción</h5>
+        </div>
+        <div class="col-3">
+          <h5>Precio</h5>
+        </div>
+        <div class="col-3">
+          <h5>Cantidad</h5>
+        </div>
+      </div>
       <CartItem v-for='item of cart' :item='item' :key='item.id' />
     </div>
     <div>
@@ -19,7 +33,7 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
-import CartItem from './CartItem.vue';
+import CartItem from '../components/CartItem.vue';
 export default {
   name: "AppCart",
   props: {
@@ -28,7 +42,7 @@ export default {
   },
   data() {
     return {
-      shipping: 500
+      shipping: 5
     }
   },
   components: { CartItem }

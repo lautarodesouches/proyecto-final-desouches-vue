@@ -3,8 +3,8 @@
   <main class='main'>
     <StoreDetail v-for='store of data' :key='store.id' :store='store' :addToCart='addToCart' />
     <CustomInfo :product='data[0].products[4]' />
-    <UserLogin msg="Welcome to Your Vue.js App" />
-    <!-- <UserRegister msg="Welcome to Your Vue.js App" /> -->
+    <UserRegister />
+    <UserLogin />
     <AppCart :cart='cart' :subtotal='subtotal' />
   </main>
   <Footer />
@@ -16,21 +16,22 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import data from './utils/data.json'
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import AppCart from './components/AppCart.vue';
-import StoreDetail from './components/StoreDetail.vue'
-import CustomInfo from './components/CustomInfo.vue'
-import UserLogin from './components/UserLogin.vue'
-/* import UserRegister from './components/UserRegister.vue' */
+import StoreDetail from './views/StoreDetail.vue'
+import CustomInfo from './views/CustomInfo.vue'
+import AppCart from './views/AppCart.vue';
+import UserLogin from './views/UserLogin.vue'
+import UserRegister from './views/UserRegister.vue'
 
 export default {
   name: 'App',
   components: {
     Footer,
     Header,
-    AppCart,
     StoreDetail,
     CustomInfo,
-    UserLogin
+    AppCart,
+    UserLogin,
+    UserRegister
   },
   data() {
     return {
@@ -41,8 +42,18 @@ export default {
   },
   methods: {
     addToCart(product) {
-      this.cart.push(product)
-      this.subtotal = Math.round(this.cart.reduce((acc, product) => acc + (product.price - (product.price * product.discount / 100)), 0))
+
+      let a = this.cart.find(item => item.id === product.id)
+
+      console.log(a);
+
+      if (a) {
+        a.qty += 1
+      } else {
+        this.cart.push({ ...product, qty: 1 })
+      }
+
+      this.subtotal = Math.round(this.cart.reduce((acc, product) => acc + ((product.price - (product.price * product.discount / 100)) * product.qty), 0))
       console.log(this.cart);
     }
   }
@@ -50,6 +61,10 @@ export default {
 </script>
 <!------------------------------------------------------------------------------------------->
 <style>
+body {
+  margin: 0;
+}
+
 :root {
   --primary-bg: #e7e5e4;
   --primary-text: #000;
@@ -60,7 +75,7 @@ export default {
 .header {
   margin: 0;
   padding: 0;
-  width: 100vw;
+  width: 100%;
   height: 6vh;
   background-color: var(--secondary-bg);
   color: var(--secondary-text);
@@ -69,7 +84,7 @@ export default {
 .main {
   margin: 0;
   padding: 3rem 1rem;
-  width: 100vw;
+  width: 100%;
   min-height: 88vh;
   background-color: var(--primary-bg);
   color: var(--primary-text);
@@ -78,7 +93,7 @@ export default {
 .footer {
   margin: 0;
   padding: 0;
-  width: 100vw;
+  width: 100%;
   height: 6vh;
   background-color: var(--secondary-bg);
   color: var(--secondary-text);

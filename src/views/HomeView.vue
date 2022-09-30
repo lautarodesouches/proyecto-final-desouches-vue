@@ -1,23 +1,31 @@
 <template>
   <div>
-    <StoreDetail v-for='store in data' :store='store' :key='store.id' :add-to-cart='addToCart'/>
+    <StoreDetail v-for='store in stores' :store='store' :key='store.id' :add-to-cart='addToCart' />
   </div>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
 
-import data from '../utils/data.json'
 import StoreDetail from '@/components/StoreDetail.vue';
+import axios from 'axios'
+import { API_URL } from '../utils/api.js'
 
 export default {
   name: 'HomeView',
   data() {
     return {
-      data
+      stores: []
     }
   },
   methods: {
     addToCart() { }
+  },
+  created() {
+
+    axios.get(`${API_URL}stores`)
+      .then(response => this.stores = response.data)
+      .catch(error => console.warn(error))
+
   },
   components: { StoreDetail }
 }

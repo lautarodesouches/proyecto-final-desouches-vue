@@ -6,7 +6,7 @@
     <div class="row justify-content-center align-items-stretch">
       <div class="col-6">
         <button class='btn btn-dark'>
-          <router-link :to="`/product/${product.id}`" class='text-white text-decoration-none'>
+          <router-link :to="`/product/${storeId}/${product.id}`" class='text-white text-decoration-none'>
             Detalle
           </router-link>
         </button>
@@ -22,6 +22,7 @@
 export default {
   name: 'ProductCard',
   props: {
+    storeId: String,
     product: Object,
     addToCart: Function
   },

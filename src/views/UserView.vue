@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div>
+    <h3 class='text-center'>{{user?.username}}</h3>
+    <div class='mt-4'>
       <button class='btn btn-danger' @click='logout()'>Cerrar sesión</button>
     </div>
   </div>
@@ -13,6 +14,7 @@ export default {
   },
   data() {
     return {
+      user: JSON.parse(localStorage.getItem('user')) || {}
     }
   },
   methods: {

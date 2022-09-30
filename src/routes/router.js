@@ -31,7 +31,7 @@ export const routes = [
         component: () => import('../views/UserView.vue')
     },
     {
-        path: '/product/:id',
+        path: '/product/:storeId/:productId',
         name: 'Detail',
         component: () => import('../views/DetailView.vue')
     },

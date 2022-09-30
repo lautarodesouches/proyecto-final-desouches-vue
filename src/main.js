@@ -3,6 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import { routes } from './routes/router'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 const router = createRouter({
     history: createWebHistory(),
     routes
@@ -17,4 +20,4 @@ router.beforeEach(async (to) => {
     }
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(VueAxios, axios).mount('#app')

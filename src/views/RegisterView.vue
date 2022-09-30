@@ -26,7 +26,7 @@
 <!------------------------------------------------------------------------------------------->
 <script>
 export default {
-  name: 'UserRegister',
+  name: 'RegisterView',
   props: {
   },
   data() {

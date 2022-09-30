@@ -3,7 +3,18 @@
     <h5 class='title'>{{product.name}}</h5>
     <img src="">
     <h5 class='price'>${{product.price - (product.price * product.discount / 100)}}</h5>
-    <button class='btn btn-primary' @click='addToCart(product)'>Añadir</button>
+    <div class="row justify-content-center align-items-stretch">
+      <div class="col-6">
+        <button class='btn btn-dark'>
+          <router-link :to="`/product/${product.id}`" class='text-white text-decoration-none'>
+            Detalle
+          </router-link>
+        </button>
+      </div>
+      <div class="col-6">
+        <button class='btn btn-primary' @click='addToCart(product)'>Añadir</button>
+      </div>
+    </div>
   </div>
 </template>
 <!------------------------------------------------------------------------------------------->

@@ -8,10 +8,19 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+
 export default {
-  name: 'CustomInfo',
-  props: {
-    product: Object
+  name: 'DetailView',
+  data() {
+    return {
+      product: {
+        name: 'test',
+        price: this.$route.params.id,
+        discount: 0,
+        sales: 2,
+        id: 1
+      }
+    }
   }
 }
 </script>

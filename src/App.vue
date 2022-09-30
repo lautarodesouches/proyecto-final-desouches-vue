@@ -1,41 +1,47 @@
 <template>
   <Header :cart='cart' />
   <main class='main'>
-    <StoreDetail v-for='store of data' :key='store.id' :store='store' :addToCart='addToCart' />
-    <CustomInfo :product='data[0].products[4]' />
-    <UserRegister />
-    <UserLogin />
-    <AppCart :cart='cart' :subtotal='subtotal' />
+    <div>
+      <router-link to="/">HOME</router-link>
+    </div>
+    <div>
+      <router-link to="/cart">CART</router-link>
+    </div>
+    <div>
+      <router-link to="/auth/login">LOGIN</router-link>
+    </div>
+    <div>
+      <router-link to="/auth/register">REGISTER</router-link>
+    </div>
+    <div>
+      <router-link to="/product/1">PRODUCTO</router-link>
+    </div>
+    <div>
+      <router-link to="/test">TEST</router-link>
+    </div>
+    <div>
+      <router-view></router-view>
+    </div>
   </main>
   <Footer />
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// ----------------------------------------------
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import data from './utils/data.json'
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
-import StoreDetail from './views/StoreDetail.vue'
-import CustomInfo from './views/CustomInfo.vue'
-import AppCart from './views/AppCart.vue';
-import UserLogin from './views/UserLogin.vue'
-import UserRegister from './views/UserRegister.vue'
+// ----------------------------------------------
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
     Footer,
-    Header,
-    StoreDetail,
-    CustomInfo,
-    AppCart,
-    UserLogin,
-    UserRegister
+    Header
   },
   data() {
     return {
-      data,
       cart: [],
       subtotal: 0
     }

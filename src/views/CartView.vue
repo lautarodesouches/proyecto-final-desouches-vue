@@ -35,7 +35,7 @@
 <script>
 import CartItem from '../components/CartItem.vue';
 export default {
-  name: "AppCart",
+  name: 'CartView',
   props: {
     cart: Array,
     subtotal: Number

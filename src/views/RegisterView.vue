@@ -1,5 +1,13 @@
 <template>
-  <form class='bg-white rounded p-3 my-5' @submit.prevent='validateForm()'>
+  <form class='form bg-white rounded p-3 my-5' @submit.prevent='validateForm()'>
+    <div class="form-group mb-3">
+      <label for="name">Nombre</label>
+      <input type="text" class="my-2 form-control" id="name" placeholder="Nombre" v-model='name'>
+    </div>
+    <div class="form-group mb-3">
+      <label for="lastname">Apellido</label>
+      <input type="text" class="my-2 form-control" id="lastname" placeholder="Apellido" v-model='lastname'>
+    </div>
     <div class="form-group mb-3">
       <label for="user">Usuario</label>
       <input type="text" class="my-2 form-control" id="user" placeholder="Usuario" v-model='username.value'
@@ -8,7 +16,8 @@
     </div>
     <div class="form-group mb-3">
       <label for="password">Contraseña</label>
-      <input type="password" class="my-2 form-control" id="password" placeholder="Contraseña" v-model='password.value' maxlength='15'>
+      <input type="password" class="my-2 form-control" id="password" placeholder="Contraseña" v-model='password.value'
+        maxlength='15'>
       <small id="passwordHelp" class="form-text text-danger" v-if='password.error'>* {{password.error}}</small>
     </div>
     <div class="form-group mb-3">
@@ -21,6 +30,10 @@
     <div class='d-flex justify-content-center'>
       <button type="submit" class="btn btn-primary">Registrarse</button>
     </div>
+    <div class='mt-4 text-center'>
+      <span>Tenés cuenta? <router-link to="/auth/login" class='text-primary text-decoration-none fw-bold'>Ingresar
+        </router-link></span>
+    </div>
   </form>
 </template>
 <!------------------------------------------------------------------------------------------->
@@ -31,13 +44,17 @@ export default {
   },
   data() {
     return {
+      name: '',
+      lastname: '',
       username: { value: '', error: '' },
       password: { value: '', error: '' },
       repeatPassword: { value: '', error: '' }
     }
   },
   methods: {
-    resetValues(){
+    resetValues() {
+      this.name = ''
+      this.lastname = ''
       this.username.value = ''
       this.password.value = ''
       this.repeatPassword.value = ''
@@ -48,7 +65,11 @@ export default {
       this.repeatPassword.error = ''
     },
     addUser() {
+      localStorage.setItem('user', JSON.stringify({
+        username: this.username.value
+      }))
       this.resetValues()
+      this.$router.go('/')
     },
     validateForm() {
 
@@ -94,5 +115,8 @@ export default {
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
-
+.form {
+  width: 400px;
+  max-width: 100%;
+}
 </style>

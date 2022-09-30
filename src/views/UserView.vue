@@ -1,20 +1,31 @@
 <template>
   <div>
-    <h2 class='text-center'>Página no encontrada</h2>
-    <div class='text-center mt-4'>
-      <button class='btn btn-primary'>
-        <router-link to="/" class='text-white text-decoration-none'>Volver al inicio</router-link>
-      </button>
+    <div>
+      <button class='btn btn-danger' @click='logout()'>Cerrar sesión</button>
     </div>
   </div>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
 export default {
-  name: 'NotFoundView'
+  name: 'UserView',
+  props: {
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem('user')
+      this.$router.go('auth/login')
+    }
+  }
 }
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
-
+.text {
+  font-weight: 400;
+}
 </style>

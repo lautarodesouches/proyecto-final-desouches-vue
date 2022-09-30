@@ -8,4 +8,13 @@ const router = createRouter({
     routes
 })
 
+router.beforeEach(async (to) => {
+
+    let isAuthenticated = localStorage.getItem('user')
+
+    if (!isAuthenticated && to.name !== 'Login' && to.name !== 'Register') {
+        return { name: 'Login' }
+    }
+})
+
 createApp(App).use(router).mount('#app')

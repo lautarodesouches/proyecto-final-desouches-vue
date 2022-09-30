@@ -22,8 +22,8 @@
     </div>
     <div>
       <h5 class='text'>Subtotal: ${{subtotal}}</h5>
-      <h5 class='text'>Envio: ${{shipping}}</h5>
-      <h4>Total: ${{this.subtotal + this.shipping}}</h4>
+      <h5 class='text'>Envio: ${{shippingCost}}</h5>
+      <h4>Total: ${{this.subtotal + this.shippingCost}}</h4>
     </div>
   </div>
   <div v-if='cart.length < 1' class='text-center my-5'>
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      shipping: 5
+      shippingCost: 5
     }
   },
   components: { CartItem }

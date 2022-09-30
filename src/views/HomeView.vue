@@ -1,5 +1,7 @@
 <template>
-  <StoreDetail v-for='store in data' :store='store' :key='store.id' :add-to-cart='addToCart'/>
+  <div>
+    <StoreDetail v-for='store in data' :store='store' :key='store.id' :add-to-cart='addToCart'/>
+  </div>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
@@ -23,7 +25,7 @@ export default {
 <!------------------------------------------------------------------------------------------->
 <style scoped>
 .store {
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 

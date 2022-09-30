@@ -1,27 +1,7 @@
 <template>
   <Header :cart='cart' />
   <main class='main'>
-    <div>
-      <router-link to="/">HOME</router-link>
-    </div>
-    <div>
-      <router-link to="/cart">CART</router-link>
-    </div>
-    <div>
-      <router-link to="/auth/login">LOGIN</router-link>
-    </div>
-    <div>
-      <router-link to="/auth/register">REGISTER</router-link>
-    </div>
-    <div>
-      <router-link to="/product/1">PRODUCTO</router-link>
-    </div>
-    <div>
-      <router-link to="/test">TEST</router-link>
-    </div>
-    <div>
-      <router-view></router-view>
-    </div>
+    <router-view />
   </main>
   <Footer />
 </template>
@@ -89,11 +69,14 @@ body {
 
 .main {
   margin: 0;
-  padding: 3rem 1rem;
+  padding: 1vh 1rem;
   width: 100%;
   min-height: 88vh;
   background-color: var(--primary-bg);
   color: var(--primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {

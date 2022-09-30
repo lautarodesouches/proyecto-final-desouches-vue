@@ -26,6 +26,11 @@ export const routes = [
         ]
     },
     {
+        path: '/user',
+        name: 'User',
+        component: () => import('../views/UserView.vue')
+    },
+    {
         path: '/product/:id',
         name: 'Detail',
         component: () => import('../views/DetailView.vue')

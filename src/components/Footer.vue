@@ -11,9 +11,9 @@
 <!------------------------------------------------------------------------------------------->
 <script>
 export default {
-  name: 'AppCart',
+  name: 'AppFooter',
   props: {
-    
+
   },
   data() {
     return {

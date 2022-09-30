@@ -1,5 +1,5 @@
 <template>
-  <div class='row align-items-end justify-content-center text-center mb-5 px-2 py-4 bg-white rounded store'>
+  <div class='row align-items-center justify-content-center text-center mb-5 px-2 py-4 bg-white rounded store'>
     <div class="col-12 col-md-auto">
       <h3 class='title'>{{store.name}}</h3>
     </div>
@@ -40,7 +40,7 @@ export default {
 <!------------------------------------------------------------------------------------------->
 <style scoped>
 .store {
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 

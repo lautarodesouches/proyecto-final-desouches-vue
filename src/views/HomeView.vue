@@ -28,6 +28,22 @@ export default {
 
     axios.get(`${API_URL}stores`)
       .then(response => this.stores = response.data)
+      .then(() => {
+
+        let products = []
+
+        axios.get(`${API_URL}products`)
+          .then(response => products = response.data)
+          .finally(() => {
+
+            this.stores.map(store => {
+              products.filter(product => product.storeId === parseInt(store.id))
+              store.products = products.filter(product => product.storeId === parseInt(store.id))
+            })
+
+          })
+
+      })
       .catch(error => console.warn(error))
 
   },

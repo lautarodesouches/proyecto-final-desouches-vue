@@ -1,5 +1,5 @@
 <template>
-  <div class='text-center my-5' v-if='cart.length > 0' @click='getSub()'>
+  <div class='text-center my-5' v-if='cart?.length > 0' @click='getSub()'>
     <div>
       <h2>Carrito</h2>
     </div>

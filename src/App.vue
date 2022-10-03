@@ -1,5 +1,5 @@
 <template>
-  <Header :cart='cart' />
+  <Header :cart='cart' :user='user' />
   <main class='main'>
     <router-view />
   </main>
@@ -23,18 +23,17 @@ export default {
   data() {
     return {
       cart: [],
-      subtotal: 0
+      subtotal: 0,
+      user: JSON.parse(localStorage.getItem('user')) || null
     }
   },
   methods: {
     addToCart(product) {
 
-      let a = this.cart.find(item => item.id === product.id)
+      let productInCart = this.cart.find(item => item.id === product.id)
 
-      console.log(a);
-
-      if (a) {
-        a.qty += 1
+      if (productInCart) {
+        productInCart.qty += 1
       } else {
         this.cart.push({ ...product, qty: 1 })
       }

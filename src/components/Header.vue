@@ -32,12 +32,8 @@ import CartIcon from './CartIcon.vue';
 export default {
   name: "AppHeader",
   props: {
-    cart: Array
-  },
-  data() {
-    return {
-      user: localStorage.getItem('user')
-    };
+    cart: Array,
+    user: Object
   },
   components: { CartIcon }
 }

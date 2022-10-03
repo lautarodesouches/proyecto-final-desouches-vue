@@ -1,9 +1,9 @@
 <template>
-  <form class='form bg-white rounded p-3 my-5' @submit.prevent='validateForm()'>
+  <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'>
 
-    <div class='bg-dark rounded p-2 text-center mx-4 mb-4 text-white'>
+    <div class='bg-dark rounded w-100 text-center text-white'>
       <h5>Credenciales</h5>
-      <div class="row p-2">
+      <div class="row">
         <div class="col-4 p-0">
           <p>Usuario</p>
           <p>Contraseña</p>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="form-group mb-3">
+    <div class="form-group my-3">
       <label for="user">Usuario</label>
       <input type="text" class="my-2 form-control" id="loginUser" placeholder="Usuario" maxlength='10'
         v-model='username.value' required>
@@ -93,7 +93,7 @@ export default {
 
           this.resetValues()
 
-          this.$router.go('/')
+          this.$router.push('/')
 
         })
         .catch(error => console.warn(error))
@@ -104,10 +104,11 @@ export default {
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
-  p{
-    margin: 0 !important;
-    border: 1px solid #fff;
-  }
+p {
+  margin: 0 !important;
+  border: 1px solid #fff;
+}
+
 .form {
   width: 400px;
   max-width: 100%;

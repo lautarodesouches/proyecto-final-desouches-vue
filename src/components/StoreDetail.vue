@@ -22,18 +22,11 @@
 
 import ProductCard from '../components/ProductCard.vue'
 
-import data from '../utils/data.json'
-
 export default {
   name: 'StoreView',
   props: {
     store: Object,
     addToCart: Function
-  },
-  data() {
-    return {
-      data
-    }
   },
   components: { ProductCard }
 }

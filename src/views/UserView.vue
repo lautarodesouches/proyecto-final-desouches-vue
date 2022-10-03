@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem("user");
-      this.$router.go("auth/login");
+      localStorage.removeItem("user")
+      this.$router.push('/auth/login')
     },
     openForm() {
       this.form = {

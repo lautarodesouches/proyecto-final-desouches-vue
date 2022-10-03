@@ -1,5 +1,5 @@
 <template>
-  <form class='form bg-white rounded p-3 my-5' @submit.prevent='validateForm()'>
+  <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'>
     <div class="form-group mb-3">
       <label for="name">Nombre</label>
       <input type="text" class="my-2 form-control" id="firstname" placeholder="Nombre" v-model='firstname'>
@@ -38,6 +38,9 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+import axios from 'axios'
+import { API_URL } from '../utils/api.js'
+
 export default {
   name: 'RegisterView',
   props: {
@@ -65,11 +68,44 @@ export default {
       this.repeatPassword.error = ''
     },
     addUser() {
-      localStorage.setItem('user', JSON.stringify({
-        username: this.username.value
-      }))
-      this.resetValues()
-      this.$router.go('/')
+
+      let newUser = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        username: this.username.value,
+        password: this.password.value
+      }
+
+      axios.get(`${API_URL}users`)
+        .then(res => {
+
+          if (res.data.find(user => user.username === newUser.username)) {
+            this.username.error = 'El usuario ya existe'
+            throw new Error('El usuario ya existe')
+          }
+
+        })
+        .then(() => {
+          axios.post(`${API_URL}users`, newUser)
+            .then(res => {
+
+              if (res.status === 201) {
+
+                localStorage.setItem('user', JSON.stringify({
+                  username: res.data.username,
+                  id: res.data.id
+                }))
+
+                this.resetValues()
+
+                this.$router.push('/')
+
+              }
+
+            })
+        })
+        .catch(error => console.warn(error))
+
     },
     validateForm() {
 

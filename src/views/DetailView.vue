@@ -1,7 +1,7 @@
 <template>
   <div class='bg-light rounded px-5 py-3 text-center my-5 border border-secondary shadow fadeIn' v-if='product?.name'>
     <h3 class='title'>{{product?.name}}</h3>
-    <img src="">
+    <img :src="product.image" class='image'>
     <h5 class='text'>Precio: ${{product?.price - (product?.price * product?.discount / 100)}}</h5>
     <h5 class='text'>Ventas: {{product?.sales}}</h5>
     <div class='row align-items-center justify-content-center mt-4'>
@@ -26,6 +26,7 @@
 
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
+
 import Loading from '@/components/Loading.vue'
 
 export default {
@@ -35,13 +36,13 @@ export default {
       product: {}
     };
   },
-  beforeCreate() {
-    axios.get(`${API_URL}stores`)
+  beforeMount() {
+    console.log(`${API_URL}products/${this.$route.params.productId}`);
+    axios.get(`${API_URL}products/${this.$route.params.productId}`)
       .then(response => {
-        let store = response.data.find(el => el.id === parseInt(this.$route.params.storeId));
-        this.product = store.products.find(el => el.id === parseInt(this.$route.params.productId));
+        this.product = response.data
       })
-      .catch(error => console.warn(error));
+      .catch(error => console.warn(error))
   },
   components: { Loading }
 }
@@ -55,5 +56,13 @@ export default {
 
 .text {
   font-weight: 400;
+}
+
+.image{
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin: 1rem 0;
 }
 </style>

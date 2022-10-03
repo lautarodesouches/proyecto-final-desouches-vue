@@ -12,7 +12,8 @@
     </div>
     <div class='col-12 col-md-6 mb-3'>
       <label for='stars'>Estrellas</label>
-      <input required type='number' class='my-2 form-control' id='stars' placeholder='Estrellas' v-model='store.stars' max='5' min='0'>
+      <input required type='number' class='my-2 form-control' id='stars' placeholder='Estrellas' v-model='store.stars'
+        max='5' min='0'>
       <span class='text-secondary'>*De 0 a 5 estrellas</span>
     </div>
     <div class='row mt-4 justify-content-around'>

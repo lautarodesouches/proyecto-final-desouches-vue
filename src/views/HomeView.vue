@@ -15,6 +15,9 @@
   <div v-if='addingStore' class='p-5'>
     <StoreForm :cancel='cancelStore' :sumbit='addStore' />
   </div>
+  <div v-if='addedToCart' class='bg-primary text-white position-fixed top-0 end-0 py-1 px-3 rounded m-5 '>
+    <h5>Se ha añadido un producto al carrito</h5>
+  </div>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
@@ -35,11 +38,47 @@ export default {
       loading: true,
       user: JSON.parse(localStorage.getItem('user')) || {},
       addingStore: false,
-      addingProduct: false
+      addingProduct: false,
+      addedToCart: false
     }
   },
   methods: {
-    addToCart() { },
+    addToCart(product) {
+
+      let data
+
+      axios.get(`${API_URL}users/${this.user.id}`)
+        .then(res => {
+
+          let user = res.data
+
+          let searchProduct = user.cart.find(cartProduct => cartProduct.id === product.id)
+
+          if (searchProduct) {
+            user.cart.map(cartProduct => {
+              if (cartProduct.id === product.id) cartProduct.qty++
+            })
+          } else {
+            user.cart.push({ ...product, qty: 1 })
+          }
+
+          data = { ...user, cart: user.cart }
+
+          this.addedToCart = true
+
+          setTimeout(() => {
+            this.addedToCart = false
+          }, 2000)
+
+        })
+        .then(() => {
+
+          axios.put(`${API_URL}users/${this.user.id}`, data)
+
+        })
+        .catch(error => console.warn(error))
+
+    },
     addProduct(product) {
       axios.post(`${API_URL}products`, product)
         .catch(error => console.warn(error))

@@ -1,11 +1,10 @@
 <template>
-  <div class='row text-center align-item-center justify-content-center'>
+  <div class='row text-center align-item-center justify-content-center my-2 bg-light py-2'>
     <div class='col-3'>
       <h5 class='text'>{{item.name}}</h5>
     </div>
     <div class='col-3'>
-      <h5 class='text'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error ut obcaecati hic quibusdam eum
-        omnis molestias recusandae.</h5>
+      <img :src='item.image' :alt='item.name' class='image'>
     </div>
     <div class='col-3'>
       <h5 class='text'>${{item.price - (item.price * item.discount / 100)}}</h5>
@@ -28,5 +27,11 @@ export default {
 <style scoped>
 .text {
   font-weight: 300;
+}
+.image{
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
 }
 </style>

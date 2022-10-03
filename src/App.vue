@@ -1,5 +1,5 @@
 <template>
-  <Header :cart='cart' :user='user' />
+  <Header :user='user' />
   <main class='main'>
     <router-view />
   </main>
@@ -22,24 +22,7 @@ export default {
   },
   data() {
     return {
-      cart: [],
-      subtotal: 0,
       user: JSON.parse(localStorage.getItem('user')) || null
-    }
-  },
-  methods: {
-    addToCart(product) {
-
-      let productInCart = this.cart.find(item => item.id === product.id)
-
-      if (productInCart) {
-        productInCart.qty += 1
-      } else {
-        this.cart.push({ ...product, qty: 1 })
-      }
-
-      this.subtotal = Math.round(this.cart.reduce((acc, product) => acc + ((product.price - (product.price * product.discount / 100)) * product.qty), 0))
-      
     }
   }
 }

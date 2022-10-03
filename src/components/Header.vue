@@ -9,7 +9,7 @@
       <div class='row justify-content-center align-items-center'>
         <div class='col-4'>
           <router-link to='/cart'>
-            <CartIcon :cartLength='cart.length' />
+            <CartIcon :cartLength='0' />
           </router-link>
         </div>
         <div class='col-4'>
@@ -32,7 +32,6 @@ import CartIcon from './CartIcon.vue';
 export default {
   name: 'AppHeader',
   props: {
-    cart: Array,
     user: Object
   },
   components: { CartIcon }

@@ -3,8 +3,23 @@
 
     <div class='bg-dark rounded p-2 text-center mx-4 mb-4 text-white'>
       <h5>Credenciales</h5>
-      <p class='m-0'>Usuario: test</p>
-      <p class='m-0'>Contraseña: 12345</p>
+      <div class="row p-2">
+        <div class="col-4 p-0">
+          <p>Usuario</p>
+          <p>Contraseña</p>
+          <p>Admin</p>
+        </div>
+        <div class="col-4 p-0">
+          <p>test</p>
+          <p>test</p>
+          <p>Si</p>
+        </div>
+        <div class="col-4 p-0">
+          <p>tost</p>
+          <p>tost</p>
+          <p>No</p>
+        </div>
+      </div>
     </div>
 
     <div class="form-group mb-3">
@@ -30,13 +45,15 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+import axios from 'axios'
+import { API_URL } from '../utils/api.js'
+
 export default {
   name: 'LoginView',
   props: {
   },
   data() {
     return {
-      defaultUser: { username: 'test', password: '12345' },
       username: { value: '', error: '' },
       password: { value: '', error: '' }
     }
@@ -50,29 +67,36 @@ export default {
       this.username.error = ''
       this.password.error = ''
     },
-    signIn() {
-      localStorage.setItem('user', JSON.stringify({
-        username: this.username.value,
-        id: 1
-      }))
-      this.resetValues()
-      this.$router.go('/')
-    },
     validateForm() {
 
       this.resetErrors()
 
-      if (this.username.value !== this.defaultUser.username) {
-        this.username.error = 'Usuario no existe'
-        return
-      }
+      axios.get(`${API_URL}users`)
+        .then(response => {
 
-      if (this.password.value !== this.defaultUser.password) {
-        this.password.error = 'Contraseña inválida'
-        return
-      }
+          let user = response.data.find(user => user.username === this.username.value)
 
-      this.signIn()
+          if (!user) {
+            this.username.error = 'Usuario no existe'
+            return
+          }
+
+          if (this.password.value !== user.password) {
+            this.password.error = 'Contraseña inválida'
+            return
+          }
+
+          localStorage.setItem('user', JSON.stringify({
+            username: user.username,
+            id: user.id
+          }))
+
+          this.resetValues()
+
+          this.$router.go('/')
+
+        })
+        .catch(error => console.warn(error))
 
     }
   }
@@ -80,6 +104,10 @@ export default {
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
+  p{
+    margin: 0 !important;
+    border: 1px solid #fff;
+  }
 .form {
   width: 400px;
   max-width: 100%;

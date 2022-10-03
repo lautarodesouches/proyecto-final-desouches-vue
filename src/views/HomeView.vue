@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div v-if='stores.length < 1'>
+    <Loading />
+  </div>
+  <div v-if='stores.length > 0'>
     <StoreDetail v-for='store in stores' :store='store' :key='store.id' :add-to-cart='addToCart' />
   </div>
 </template>
@@ -9,6 +12,7 @@
 import StoreDetail from '@/components/StoreDetail.vue';
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'HomeView',
@@ -27,7 +31,7 @@ export default {
       .catch(error => console.warn(error))
 
   },
-  components: { StoreDetail }
+  components: { StoreDetail, Loading }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

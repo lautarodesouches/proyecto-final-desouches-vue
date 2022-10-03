@@ -4,17 +4,17 @@
       <h2>Carrito</h2>
     </div>
     <div class='my-5'>
-      <div class="row text-center mb-3">
-        <div class="col-3">
+      <div class='row text-center mb-3'>
+        <div class='col-3'>
           <h5>Nombre</h5>
         </div>
-        <div class="col-3">
+        <div class='col-3'>
           <h5>Descripción</h5>
         </div>
-        <div class="col-3">
+        <div class='col-3'>
           <h5>Precio</h5>
         </div>
-        <div class="col-3">
+        <div class='col-3'>
           <h5>Cantidad</h5>
         </div>
       </div>

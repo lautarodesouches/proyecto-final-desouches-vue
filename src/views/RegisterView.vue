@@ -1,37 +1,37 @@
 <template>
   <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'>
-    <div class="form-group mb-3">
-      <label for="firstname">Nombre</label>
-      <input type="text" class="my-2 form-control" id="firstname" placeholder="Nombre" v-model='firstname'>
+    <div class='form-group mb-3'>
+      <label for='firstname'>Nombre</label>
+      <input type='text' class='my-2 form-control' id='firstname' placeholder='Nombre' v-model='firstname'>
     </div>
-    <div class="form-group mb-3">
-      <label for="lastname">Apellido</label>
-      <input type="text" class="my-2 form-control" id="lastname" placeholder="Apellido" v-model='lastname'>
+    <div class='form-group mb-3'>
+      <label for='lastname'>Apellido</label>
+      <input type='text' class='my-2 form-control' id='lastname' placeholder='Apellido' v-model='lastname'>
     </div>
-    <div class="form-group mb-3">
-      <label for="user">Usuario</label>
-      <input type="text" class="my-2 form-control" id="user" placeholder="Usuario" v-model='username.value'
+    <div class='form-group mb-3'>
+      <label for='user'>Usuario</label>
+      <input type='text' class='my-2 form-control' id='user' placeholder='Usuario' v-model='username.value'
         maxlength='10'>
-      <small id="userHelp" class="form-text text-danger" v-if='username.error'>* {{username.error}}</small>
+      <small id='userHelp' class='form-text text-danger' v-if='username.error'>* {{username.error}}</small>
     </div>
-    <div class="form-group mb-3">
-      <label for="password">Contraseña</label>
-      <input type="password" class="my-2 form-control" id="password" placeholder="Contraseña" v-model='password.value'
+    <div class='form-group mb-3'>
+      <label for='password'>Contraseña</label>
+      <input type='password' class='my-2 form-control' id='password' placeholder='Contraseña' v-model='password.value'
         maxlength='15'>
-      <small id="passwordHelp" class="form-text text-danger" v-if='password.error'>* {{password.error}}</small>
+      <small id='passwordHelp' class='form-text text-danger' v-if='password.error'>* {{password.error}}</small>
     </div>
-    <div class="form-group mb-3">
-      <label for="repeatPassword">Repetir contraseña</label>
-      <input type="password" class="my-2 form-control" id="repeatPassword" placeholder="Repetir contraseña"
+    <div class='form-group mb-3'>
+      <label for='repeatPassword'>Repetir contraseña</label>
+      <input type='password' class='my-2 form-control' id='repeatPassword' placeholder='Repetir contraseña'
         v-model='repeatPassword.value' maxlength='15'>
-      <small id="repeatPasswordHelp" class="form-text text-danger" v-if='repeatPassword.error'>*
+      <small id='repeatPasswordHelp' class='form-text text-danger' v-if='repeatPassword.error'>*
         {{repeatPassword.error}}</small>
     </div>
     <div class='d-flex justify-content-center'>
-      <button type="submit" class="btn btn-primary">Registrarse</button>
+      <button type='submit' class='btn btn-primary'>Registrarse</button>
     </div>
     <div class='mt-4 text-center'>
-      <span>Tenés cuenta? <router-link to="/auth/login" class='text-primary text-decoration-none fw-bold'>Ingresar
+      <span>Tenés cuenta? <router-link to='/auth/login' class='text-primary text-decoration-none fw-bold'>Ingresar
         </router-link></span>
     </div>
   </form>

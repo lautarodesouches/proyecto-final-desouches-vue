@@ -1,9 +1,19 @@
 <template>
-  <div v-if='stores.length < 1'>
+  <div v-if='loading'>
     <Loading />
   </div>
-  <div v-if='stores.length > 0'>
+  <div v-if='!loading && !addingStore && !addingProduct'>
+    <div class='row justify-content-around w-50 m-auto mt-3' v-if='user.admin'>
+      <AddButton text='tienda' @click='openStoreForm()' />
+      <AddButton text='producto' @click='openProductForm()' />
+    </div>
     <StoreDetail v-for='store in stores' :store='store' :key='store.id' :add-to-cart='addToCart' />
+  </div>
+  <div v-if='addingProduct' class='p-5'>
+    <ProductForm :cancel='cancelProduct' :sumbit='addProduct' />
+  </div>
+  <div v-if='addingStore' class='p-5'>
+    <StoreForm :cancel='cancelStore' :sumbit='addStore' />
   </div>
 </template>
 <!------------------------------------------------------------------------------------------->
@@ -13,16 +23,43 @@ import StoreDetail from '@/components/StoreDetail.vue';
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
 import Loading from '@/components/Loading.vue';
+import AddButton from '@/components/AddButton.vue';
+import ProductForm from '@/components/ProductForm.vue';
+import StoreForm from '../components/StoreForm.vue';
 
 export default {
   name: 'HomeView',
   data() {
     return {
-      stores: []
+      stores: [],
+      loading: true,
+      user: JSON.parse(localStorage.getItem('user')) || {},
+      addingStore: false,
+      addingProduct: false
     }
   },
   methods: {
-    addToCart() { }
+    addToCart() { },
+    addProduct(product) {
+      axios.post(`${API_URL}products`, product)
+        .catch(error => console.warn(error))
+    },
+    addStore(store) {
+      axios.post(`${API_URL}stores`, store)
+        .catch(error => console.warn(error))
+    },
+    cancelStore() {
+      this.addingStore = false
+    },
+    cancelProduct() {
+      this.addingProduct = false
+    },
+    openProductForm() {
+      this.addingProduct = true
+    },
+    openStoreForm() {
+      this.addingStore = true
+    }
   },
   created() {
 
@@ -34,12 +71,14 @@ export default {
 
         axios.get(`${API_URL}products`)
           .then(response => products = response.data)
-          .finally(() => {
+          .then(() => {
 
             this.stores.map(store => {
               products.filter(product => product.storeId === parseInt(store.id))
               store.products = products.filter(product => product.storeId === parseInt(store.id))
             })
+
+            this.loading = false
 
           })
 
@@ -47,7 +86,7 @@ export default {
       .catch(error => console.warn(error))
 
   },
-  components: { StoreDetail, Loading }
+  components: { StoreDetail, Loading, AddButton, ProductForm, StoreForm }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

@@ -3,18 +3,18 @@
 
     <div class='bg-dark rounded w-100 text-center text-white'>
       <h5>Credenciales</h5>
-      <div class="row">
-        <div class="col-4 p-0">
+      <div class='row'>
+        <div class='col-4 p-0'>
           <p>Usuario</p>
           <p>Contraseña</p>
           <p>Admin</p>
         </div>
-        <div class="col-4 p-0">
+        <div class='col-4 p-0'>
           <p>test</p>
           <p>test</p>
           <p>Si</p>
         </div>
-        <div class="col-4 p-0">
+        <div class='col-4 p-0'>
           <p>tost</p>
           <p>tost</p>
           <p>No</p>
@@ -22,23 +22,23 @@
       </div>
     </div>
 
-    <div class="form-group my-3">
-      <label for="user">Usuario</label>
-      <input type="text" class="my-2 form-control" id="loginUser" placeholder="Usuario" maxlength='10'
+    <div class='form-group my-3'>
+      <label for='user'>Usuario</label>
+      <input type='text' class='my-2 form-control' id='loginUser' placeholder='Usuario' maxlength='10'
         v-model='username.value' required>
-      <small id="loginUserHelp" class="form-text text-danger" v-if='username.error'>* {{username.error}}</small>
+      <small id='loginUserHelp' class='form-text text-danger' v-if='username.error'>* {{username.error}}</small>
     </div>
-    <div class="form-group mb-3">
-      <label for="password">Contraseña</label>
-      <input type="password" class="my-2 form-control" id="loginPassword" placeholder="Contraseña" maxlength='15'
+    <div class='form-group mb-3'>
+      <label for='password'>Contraseña</label>
+      <input type='password' class='my-2 form-control' id='loginPassword' placeholder='Contraseña' maxlength='15'
         v-model='password.value' required>
-      <small id="loginPasswordHelp" class="form-text text-danger" v-if='password.error'>* {{password.error}}</small>
+      <small id='loginPasswordHelp' class='form-text text-danger' v-if='password.error'>* {{password.error}}</small>
     </div>
     <div class='d-flex justify-content-center'>
-      <button type="submit" class="btn btn-primary">Ingresar</button>
+      <button type='submit' class='btn btn-primary'>Ingresar</button>
     </div>
     <div class='mt-4 text-center'>
-      <span>No tenés cuenta? <router-link to="/auth/register" class='text-primary text-decoration-none fw-bold'>
+      <span>No tenés cuenta? <router-link to='/auth/register' class='text-primary text-decoration-none fw-bold'>
           Registrarme</router-link></span>
     </div>
   </form>

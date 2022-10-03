@@ -2,7 +2,7 @@
   <form class='form bg-white rounded p-3 my-5' @submit.prevent='validateForm()'>
     <div class="form-group mb-3">
       <label for="name">Nombre</label>
-      <input type="text" class="my-2 form-control" id="name" placeholder="Nombre" v-model='name'>
+      <input type="text" class="my-2 form-control" id="firstname" placeholder="Nombre" v-model='firstname'>
     </div>
     <div class="form-group mb-3">
       <label for="lastname">Apellido</label>
@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      name: '',
+      firstname: '',
       lastname: '',
       username: { value: '', error: '' },
       password: { value: '', error: '' },
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     resetValues() {
-      this.name = ''
+      this.firstname = ''
       this.lastname = ''
       this.username.value = ''
       this.password.value = ''

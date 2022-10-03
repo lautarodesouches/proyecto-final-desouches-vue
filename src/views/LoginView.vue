@@ -43,16 +43,17 @@ export default {
   },
   methods: {
     resetValues() {
-      this.username.value = '',
-        this.password.value = ''
+      this.username.value = ''
+      this.password.value = ''
     },
     resetErrors() {
-      this.username.error = '',
-        this.password.error = ''
+      this.username.error = ''
+      this.password.error = ''
     },
     signIn() {
       localStorage.setItem('user', JSON.stringify({
-        username: this.username.value
+        username: this.username.value,
+        id: 1
       }))
       this.resetValues()
       this.$router.go('/')

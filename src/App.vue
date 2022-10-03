@@ -124,8 +124,10 @@ body {
 .flash {
   -webkit-animation-name: flash;
   animation-name: flash;
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }

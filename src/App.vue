@@ -39,7 +39,7 @@ export default {
       }
 
       this.subtotal = Math.round(this.cart.reduce((acc, product) => acc + ((product.price - (product.price * product.discount / 100)) * product.qty), 0))
-      console.log(this.cart);
+      
     }
   }
 }

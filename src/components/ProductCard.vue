@@ -1,5 +1,5 @@
 <template>
-  <div class='card p-2 border border-secondary rounded bg-light shadow'>
+  <div class='card px-2 py-3 border border-secondary rounded bg-light shadow'>
     <h5 class='title'>{{product.name}}</h5>
     <img :src="product.image" class='image'>
     <h5 class='price'>${{product.price - (product.price * product.discount / 100)}}</h5>
@@ -42,6 +42,12 @@ export default {
   align-items: center;
   width: 200px;
   min-height: 200px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
 }
 
 .title,

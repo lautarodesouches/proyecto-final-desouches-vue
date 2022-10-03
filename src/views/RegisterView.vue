@@ -1,7 +1,7 @@
 <template>
   <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'>
     <div class="form-group mb-3">
-      <label for="name">Nombre</label>
+      <label for="firstname">Nombre</label>
       <input type="text" class="my-2 form-control" id="firstname" placeholder="Nombre" v-model='firstname'>
     </div>
     <div class="form-group mb-3">
@@ -93,7 +93,8 @@ export default {
 
                 localStorage.setItem('user', JSON.stringify({
                   username: res.data.username,
-                  id: res.data.id
+                  id: res.data.id,
+                  admin: res.data.admin
                 }))
 
                 this.resetValues()

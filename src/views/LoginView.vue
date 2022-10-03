@@ -88,7 +88,8 @@ export default {
 
           localStorage.setItem('user', JSON.stringify({
             username: user.username,
-            id: user.id
+            id: user.id,
+            admin: user.admin
           }))
 
           this.resetValues()

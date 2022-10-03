@@ -1,5 +1,5 @@
 <template>
-  <div class='bg-light rounded px-5 py-3 text-center my-5 border border-secondary shadow'>
+  <div class='bg-light rounded px-5 py-3 text-center my-5 border border-secondary shadow fadeIn' v-if='product?.name'>
     <h3 class='title'>{{product?.name}}</h3>
     <img src="">
     <h5 class='text'>Precio: ${{product?.price - (product?.price * product?.discount / 100)}}</h5>
@@ -17,37 +17,39 @@
       </div>
     </div>
   </div>
+  <div v-if='!product?.name'>
+    <Loading />
+  </div>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
 
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
+import Loading from '@/components/Loading.vue'
 
 export default {
-  name: 'DetailView',
+  name: "DetailView",
   data() {
     return {
       product: {}
-    }
+    };
   },
-  created() {
-
-    console.log(`${API_URL}stores/${this.$route.params.storeId}`)
-
-    axios.get(`${API_URL}stores/${this.$route.params.storeId}`)
+  beforeCreate() {
+    axios.get(`${API_URL}stores`)
       .then(response => {
-        response.data.products.find(el => el.id === this.$route.params.productId)
+        let store = response.data.find(el => el.id === parseInt(this.$route.params.storeId));
+        this.product = store.products.find(el => el.id === parseInt(this.$route.params.productId));
       })
-      .catch(error => console.warn(error))
-
-  }
+      .catch(error => console.warn(error));
+  },
+  components: { Loading }
 }
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
 .title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 300;
 }
 

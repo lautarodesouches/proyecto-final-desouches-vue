@@ -1,5 +1,5 @@
 <template>
-  <div class='card p-2 border border-secondary rounded bg-light cursor-pointer shadow'>
+  <div class='card p-2 border border-secondary rounded bg-light shadow'>
     <h5 class='title'>{{product.name}}</h5>
     <img src="">
     <h5 class='price'>${{product.price - (product.price * product.discount / 100)}}</h5>
@@ -22,7 +22,7 @@
 export default {
   name: 'ProductCard',
   props: {
-    storeId: String,
+    storeId: Number,
     product: Object,
     addToCart: Function
   },

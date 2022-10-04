@@ -19,14 +19,18 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
-
+// -------------------------------------------
 import ProductCard from '../components/ProductCard.vue'
-
+// -------------------------------------------
 export default {
   name: 'StoreView',
   props: {
-    store: Object,
-    addToCart: Function
+    store: Object
+  },
+  methods: {
+    addToCart(product) {
+      this.$store.dispatch('addToCart', product)
+    }
   },
   components: { ProductCard }
 }

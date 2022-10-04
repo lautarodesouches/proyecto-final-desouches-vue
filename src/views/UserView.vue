@@ -1,18 +1,18 @@
 <template>
-  <div class='fadeIn text-center bg-white p-4 rounded box' v-if='user?.username && !isEditing'>
+  <div class='fadeIn text-center bg-white p-4 rounded box' v-if='this.$store.getters.getUser?.username && !isEditing'>
     <div class='row align-items-center justify-content-center'>
       <div class='col-6'>
-        <h4>ID: {{user?.id}}</h4>
+        <h4>ID: {{this.$store.getters.getUser?.id}}</h4>
       </div>
       <div class='col-6'>
-        <h4>{{user?.username}}</h4>
+        <h4>{{this.$store.getters.getUser?.username}}</h4>
       </div>
     </div>
     <div class='my-4'>
-      <h4>{{user?.lastname}}, {{user?.firstname}}</h4>
+      <h4>{{this.$store.getters.getUser?.lastname}}, {{this.$store.getters.getUser?.firstname}}</h4>
     </div>
     <div class='row align-items-center justify-content-around mt-5'>
-      <div class='col-6' v-if='user.admin'>
+      <div class='col-6' v-if='this.$store.getters.getUser.admin'>
         <button class='w-100 btn btn-secondary' @click='openForm()'>Editar</button>
       </div>
       <div class='col-6'>
@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
-  <div v-if='!user?.username'>
+  <div v-if='!this.$store.getters.getUser?.username'>
     <Loading />
   </div>
   <div v-if='isEditing' class='fadeIn bg-white p-4 rounded'>
@@ -63,61 +63,42 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// -------------------------------------------
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
+// -------------------------------------------
 import Loading from '@/components/Loading.vue'
-
+// -------------------------------------------
 export default {
   name: 'UserView',
-  props: {},
   data() {
     return {
-      user: {},
       isEditing: false,
       form: {}
-    };
+    }
   },
   methods: {
     logout() {
-      localStorage.removeItem('user')
+      this.$store.dispatch('setUser', null)
       this.$router.push('/auth/login')
     },
     openForm() {
-      this.form = {
-        firstname: this.user?.firstname,
-        lastname: this.user?.lastname,
-        username: this.user?.username,
-        password: this.user?.password,
-        admin: this.user?.admin,
-      }
+      this.form = this.$store.getters.getUser
+      this.form.status = ''
       this.isEditing = true
     },
     edit() {
 
       this.form.status = 'Procesando'
 
-      axios.put(`${API_URL}users/${this.user.id}`, this.form)
-        .then(response => {
-          if (response.statusText === 'OK') this.isEditing = false
-          else this.form.status = 'No se pudo editar, intente mas tarde'
-        })
+      axios.put(`${API_URL}users/${this.$store.getters.getUser.id}`, this.form)
+        .then(() => this.isEditing = false)
         .catch(error => console.warn(error))
 
     },
     cancel() {
       this.isEditing = false
     }
-  },
-  beforeCreate() {
-
-    let localUser = JSON.parse(localStorage.getItem('user'))
-
-    axios.get(`${API_URL}users/${localUser.id}`)
-      .then(response => {
-        this.user = response.data
-
-      })
-      .catch(error => console.warn(error));
   },
   components: { Loading }
 }

@@ -16,6 +16,7 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// -------------------------------------------
 export default {
   name: 'CartItem',
   props: {
@@ -28,7 +29,8 @@ export default {
 .text {
   font-weight: 300;
 }
-.image{
+
+.image {
   width: 150px;
   max-width: 100%;
   height: auto;

@@ -1,7 +1,8 @@
 <template>
   <div class='bg-light rounded px-5 py-3 text-center my-5 border border-secondary shadow fadeIn position-relative'
     v-if='product?.name && !isEditing && !confirmDelete'>
-    <div class='icon rounded p-1 bg-danger cursor-pointer' v-if='user.admin' @click='openConfirmDelete()'>
+    <div class='icon rounded p-1 bg-danger cursor-pointer' v-if='this.$store.getters.getUser.admin'
+      @click='openConfirmDelete()'>
       <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='white' class='bi bi-trash3-fill'
         viewBox='0 0 16 16'>
         <path
@@ -20,7 +21,7 @@
           </router-link>
         </button>
       </div>
-      <div class='col-12 my-2 my-md-0 col-md-4' v-if='user.admin'>
+      <div class='col-12 my-2 my-md-0 col-md-4' v-if='this.$store.getters.getUser.admin'>
         <button class='w-100 btn btn-dark' @click='edit()'>Editar</button>
       </div>
       <div class='col-12 my-2 my-md-0 col-md-4'>
@@ -28,54 +29,38 @@
       </div>
     </div>
   </div>
-  <div v-if='!product?.name && !isEditing'>
-    <Loading />
-  </div>
-  <div v-if='isEditing'>
-    <ProductForm :cancel='cancel' :sumbit='sumbit' :initialProduct='product' />
-  </div>
-  <div v-if='confirmDelete' class='text-center bg-white fadeIn p-4 rounded'>
-    <h5>Estas seguro que querés eliminar el producto?</h5>
-    <div class='row mt-4'>
-      <div class='col-6'>
-        <button class='btn btn-secondary' @click='closeConfirmDelete()'>Cancelar</button>
-      </div>
-      <div class='col-6'>
-        <button class='btn btn-danger' @click='deleteProduct()'>Eliminar</button>
-      </div>
-    </div>
-  </div>
-  <div v-if='addedToCart' class='bg-primary text-white position-fixed top-0 end-0 py-1 px-3 rounded m-5 '>
-    <h5>Se ha añadido un producto al carrito</h5>
-  </div>
+  <!---->
+  <Loading v-if='!product?.name && !isEditing' />
+  <!---->
+  <ProductForm v-if='isEditing' :cancel='cancel' :sumbit='sumbit' :initialProduct='product' />
+  <!---->
+  <ConfirmModal v-if='confirmDelete' message='Estas seguro que querés eliminar el producto?' action='Eliminar'
+    :cancel='closeConfirmDelete' :confirm='deleteProduct' />
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
-
+// -------------------------------------------
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
-
+// -------------------------------------------
 import Loading from '@/components/Loading.vue'
-import ProductForm from '@/components/ProductForm.vue';
-
+import ProductForm from '@/components/ProductForm.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
+// -------------------------------------------
 export default {
   name: 'DetailView',
   data() {
     return {
       product: {},
-      user: JSON.parse(localStorage.getItem('user')) || {},
       isEditing: false,
       status: '',
-      confirmDelete: false,
-      addedToCart: false
+      confirmDelete: false
     };
   },
   beforeMount() {
     axios.get(`${API_URL}products/${this.$route.params.productId}`)
-      .then(response => {
-        this.product = response.data
-      })
-      .catch(error => console.warn(error))
+      .then(response => this.product = response.data)
+      .catch(error => this.status = error.message)
   },
   methods: {
     edit() {
@@ -97,10 +82,8 @@ export default {
       this.isEditing = false
     },
     deleteProduct() {
-      axios.delete(`${API_URL}products/${this.product.id}`)
-        .then(() => {
-          this.$router.push('/')
-        })
+      this.$store.dispatch('deleteProduct', this.product.id)
+      this.$router.push('/')
     },
     openConfirmDelete() {
       this.confirmDelete = true
@@ -108,45 +91,11 @@ export default {
     closeConfirmDelete() {
       this.confirmDelete = false
     },
-    //---------------------
     addToCart(product) {
-
-      let data
-
-      axios.get(`${API_URL}users/${this.user.id}`)
-        .then(res => {
-
-          let user = res.data
-
-          let searchProduct = user.cart.find(cartProduct => cartProduct.id === product.id)
-
-          if (searchProduct) {
-            user.cart.map(cartProduct => {
-              if (cartProduct.id === product.id) cartProduct.qty++
-            })
-          } else {
-            user.cart.push({ ...product, qty: 1 })
-          }
-
-          data = { ...user, cart: user.cart }
-
-          this.addedToCart = true
-
-          setTimeout(() => {
-            this.addedToCart = false
-          }, 2000)
-
-        })
-        .then(() => {
-
-          axios.put(`${API_URL}users/${this.user.id}`, data)
-
-        })
-        .catch(error => console.warn(error))
-
+      this.$store.dispatch('addToCart', product)
     },
   },
-  components: { Loading, ProductForm }
+  components: { Loading, ProductForm, ConfirmModal }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

@@ -19,16 +19,21 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// -------------------------------------------
 export default {
   name: 'ProductCard',
   props: {
     storeId: String,
-    product: Object,
-    addToCart: Function
+    product: Object
   },
   data() {
     return {
       price: this.product.price - (this.product.price * this.product.discount / 100)
+    }
+  },
+  methods: {
+    addToCart(product) {
+      this.$store.dispatch('addToCart', product)
     }
   }
 }

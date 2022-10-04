@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent class='bg-white p-4 rounded row align-items-start justify-content-center form fadeIn'>
+  <form @submit.prevent class='bg-white p-4 rounded row align-items-start justify-content-center form fadeIn my-4'>
     <div class='col-12 mb-3' v-if='store.id'>
       <h5 class='text-center'>ID - {{store.id}}</h5>
     </div>
@@ -29,6 +29,7 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// -------------------------------------------
 export default {
   name: 'storeForm',
   data() {

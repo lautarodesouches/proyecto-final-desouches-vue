@@ -38,13 +38,12 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// -------------------------------------------
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
-
+// -------------------------------------------
 export default {
   name: 'RegisterView',
-  props: {
-  },
   data() {
     return {
       firstname: '',
@@ -79,13 +78,8 @@ export default {
       axios.get(`${API_URL}users`)
         .then(res => {
 
-          if (res.data.find(user => user.username === newUser.username)) {
-            this.username.error = 'El usuario ya existe'
-            throw new Error('El usuario ya existe')
-          }
+          if (res.data.find(user => user.username === newUser.username)) return this.username.error = 'El usuario ya existe'
 
-        })
-        .then(() => {
           axios.post(`${API_URL}users`, newUser)
             .then(res => {
 
@@ -114,34 +108,22 @@ export default {
 
       let required = 'El campo es requerido'
 
-      if (this.username.value === '') {
-        this.username.error = required
-        return
-      }
+      if (this.username.value === '') return this.username.error = required
 
-      if (this.password.value === '') {
-        this.password.error = required
-        return
-      }
+      if (this.password.value === '') return this.password.error = required
 
-      if (this.repeatPassword.value === '') {
-        this.repeatPassword.error = required
-        return
-      }
+      if (this.repeatPassword.value === '') return this.repeatPassword.error = required
 
       if (!RegExp('^[a-z0-9_-]{3,10}$').test(this.username.value)) {
-        this.username.error = 'El usuario solo debe contener letras y numeros. Y debe contener al menos 3 carácteres'
-        return
+        return this.username.error = 'El usuario solo debe contener letras y numeros. Y debe contener al menos 3 carácteres'
       }
 
       if (!RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{4,}$').test(this.password.value)) {
-        this.password.error = 'La contraseña debe tener mínimo cuatro caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial'
-        return
+        return this.password.error = 'La contraseña debe tener mínimo cuatro caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial'
       }
 
       if (this.password.value !== this.repeatPassword.value) {
-        this.repeatPassword.error = 'Las contraseñas no coinciden'
-        return
+        return this.repeatPassword.error = 'Las contraseñas no coinciden'
       }
 
       this.addUser()

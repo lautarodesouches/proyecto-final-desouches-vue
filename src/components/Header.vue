@@ -5,11 +5,11 @@
         <h1 class='title'>PeticiónIpsoFacto</h1>
       </router-link>
     </div>
-    <div class='col-6 col-md-3 text-end'>
+    <div class='col-6 col-md-3 text-end' v-if='this.$store.getters.getUser'>
       <div class='row justify-content-center align-items-center'>
         <div class='col-4'>
           <router-link to='/cart'>
-            <CartIcon :cartLength='0' />
+            <CartIcon />
           </router-link>
         </div>
         <div class='col-4'>
@@ -28,12 +28,11 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
-import CartIcon from './CartIcon.vue';
+// -------------------------------------------
+import CartIcon from './CartIcon.vue'
+// -------------------------------------------
 export default {
   name: 'AppHeader',
-  props: {
-    user: Object
-  },
   components: { CartIcon }
 }
 </script>

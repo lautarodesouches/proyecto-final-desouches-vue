@@ -45,17 +45,18 @@
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+// ----------------------------------------------------
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
-
+// ----------------------------------------------------
 export default {
   name: 'LoginView',
   props: {
   },
   data() {
     return {
-      username: { value: '', error: '' },
-      password: { value: '', error: '' }
+      username: { value: 'test', error: '' },
+      password: { value: 'test', error: '' }
     }
   },
   methods: {
@@ -76,21 +77,11 @@ export default {
 
           let user = response.data.find(user => user.username === this.username.value)
 
-          if (!user) {
-            this.username.error = 'Usuario no existe'
-            return
-          }
+          if (!user) return this.username.error = 'Usuario no existe'
 
-          if (this.password.value !== user.password) {
-            this.password.error = 'Contraseña inválida'
-            return
-          }
+          if (this.password.value !== user.password) return this.password.error = 'Contraseña inválida'
 
-          localStorage.setItem('user', JSON.stringify({
-            username: user.username,
-            id: user.id,
-            admin: user.admin
-          }))
+          this.$store.dispatch('setUser', user)
 
           this.resetValues()
 

@@ -1,14 +1,7 @@
 <template>
   <div class='bg-light rounded px-5 py-3 text-center my-5 border border-secondary shadow fadeIn position-relative'
     v-if='product?.name && !isEditing && !confirmDelete'>
-    <div class='icon rounded p-1 bg-danger cursor-pointer' v-if='this.$store.getters.getUser.admin'
-      @click='openConfirmDelete()'>
-      <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='white' class='bi bi-trash3-fill'
-        viewBox='0 0 16 16'>
-        <path
-          d='M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z' />
-      </svg>
-    </div>
+    <DeleteIcon :onclick='openConfirmDelete' class='icon' />
     <h3 class='title'>{{product?.name}}</h3>
     <img :src='product.image' class='image'>
     <h5 class='text'>Precio: ${{product?.price - (product?.price * product?.discount / 100)}}</h5>
@@ -46,6 +39,7 @@ import { API_URL } from '../utils/api.js'
 import Loading from '@/components/Loading.vue'
 import ProductForm from '@/components/ProductForm.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
+import DeleteIcon from '@/components/DeleteIcon.vue'
 // -------------------------------------------
 export default {
   name: 'DetailView',
@@ -95,7 +89,7 @@ export default {
       this.$store.dispatch('addToCart', product)
     },
   },
-  components: { Loading, ProductForm, ConfirmModal }
+  components: { Loading, ProductForm, ConfirmModal, DeleteIcon }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

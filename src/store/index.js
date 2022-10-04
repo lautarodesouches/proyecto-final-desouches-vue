@@ -85,7 +85,7 @@ export default new Vuex.Store({
 
         },
         removeFromCart(state, payload) {
-            state.cart = state.cart.filter(product => product.id !== payload.id)
+            state.cart = state.cart.filter(product => product.id !== payload)
         },
         clearCart(state) {
             state.cart = []
@@ -120,8 +120,8 @@ export default new Vuex.Store({
         addToCart(context, product) {
             context.commit('addToCart', product)
         },
-        removeFromCart(context, product) {
-            context.commit('removeFromCart', product)
+        removeFromCart(context, productId) {
+            context.commit('removeFromCart', productId)
         },
         clearCart(context) {
             context.commit('clearCart')

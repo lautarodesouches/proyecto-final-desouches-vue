@@ -6,17 +6,20 @@
       </div>
       <div class='my-5'>
         <div class='row text-center mb-3'>
-          <div class='col-3'>
+          <div class='col-12 col-md-2'>
             <h5>Nombre</h5>
           </div>
-          <div class='col-3'>
+          <div class='col-12 col-md-4'>
             <h5>Imagen</h5>
           </div>
-          <div class='col-3'>
+          <div class='col-12 col-md-2'>
             <h5>Precio</h5>
           </div>
-          <div class='col-3'>
+          <div class='col-12 col-md-2'>
             <h5>Cantidad</h5>
+          </div>
+          <div class='col-12 col-md-2'>
+            <h5>Eliminar</h5>
           </div>
         </div>
         <CartItem v-for='item of this.$store.getters.getCart' :item='item' :key='item.id' />

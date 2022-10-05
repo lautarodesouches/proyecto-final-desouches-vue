@@ -22,80 +22,32 @@ export default new Vuex.Store({
         getLoading: state => { return state.loading },
     },
     mutations: {
-        setLoading(state, payload) {
-            state.loading = payload
+        setCart(state, payload) {
+            state.cart = payload
         },
-        setError(state, payload) {
-            state.error = payload
+        setStores(state, payload) {
+            state.stores = payload
         },
         setUser(state, payload) {
             state.user = payload
         },
-        getStores(state) {
-
-            state.loading = true
-
-            axios.get(`${API_URL}stores`)
-                .then(response => {
-
-                    state.stores = response.data
-
-                    axios.get(`${API_URL}products`)
-                        .then(response => {
-
-                            state.stores.map(store => {
-                                store.products = response.data.filter(product => product.storeId === parseInt(store.id))
-                            })
-
-                        })
-                        .finally(() => state.loading = false)
-
-                })
-
+        setError(state, payload) {
+            state.error = payload
         },
-        addProduct(state, payload) {
-
-            state.loading = true
-
-            axios.post(`${API_URL}products`, payload)
-                .catch(error => state.error = error)
-                .finally(() => state.loading = false)
-
+        setLoading(state, payload) {
+            state.loading = payload
         },
-        addStore(state, payload) {
-
-            state.loading = true
-
-            axios.post(`${API_URL}stores`, payload)
-                .catch(error => state.error = error)
-                .finally(() => state.loading = false)
-
+        addOneItemToProductInCart(state, payload) {
+            state.cart.map(product => product.id === payload && product.qty++)
         },
-        addToCart(state, payload) {
-
-            let productInCart = state.cart.find(product => product.id === payload.id)
-
-            if (productInCart) {
-                state.cart.map(product => product.id === payload.id && product.qty++)
-            } else {
-                state.cart.push({ ...payload, qty: 1 })
-            }
-
-            console.log(state.cart);
-
+        addProductToCart(state, payload) {
+            state.cart.push({ ...payload, qty: 1 })
         },
         removeFromCart(state, payload) {
             state.cart = state.cart.filter(product => product.id !== payload)
         },
         clearCart(state) {
             state.cart = []
-        },
-        deleteProduct(state, payload) {
-            state.loading = true
-
-            axios.delete(`${API_URL}products`, payload)
-                .catch(error => state.error = error)
-                .finally(() => state.loading = false)
         }
     },
     actions: {
@@ -108,17 +60,59 @@ export default new Vuex.Store({
         setUser(context, user) {
             context.commit('setUser', user)
         },
-        getStores(context) {
-            context.commit('getStores')
+        fetchStores(context) {
+
+            context.commit('setLoading', true)
+
+            axios.get(`${API_URL}stores`)
+                .then(response => {
+
+                    let stores = response.data
+
+                    axios.get(`${API_URL}products`)
+                        .then(response => {
+
+                            stores.map(store => {
+                                store.products = response.data.filter(product => product.storeId === parseInt(store.id))
+                            })
+
+                        })
+                        .finally(() => {
+                            context.commit('setStores', stores)
+                            context.commit('setLoading', false)
+                        })
+
+                })
+
         },
         addProduct(context, product) {
-            context.commit('addProduct', product)
+
+            context.commit('setLoading', true)
+
+            axios.post(`${API_URL}products`, product)
+                .catch(error => context.commit('setError', error))
+                .finally(() => context.commit('setLoading', false))
+
         },
         addStore(context, store) {
-            context.commit('addStore', store)
+
+            context.commit('setLoading', true)
+
+            axios.post(`${API_URL}stores`, store)
+                .catch(error => context.commit('setError', error))
+                .finally(() => context.commit('setLoading', false))
+
         },
         addToCart(context, product) {
-            context.commit('addToCart', product)
+
+            let productInCart = context.state.cart.find(productInCart => productInCart.id === product.id)
+
+            if (productInCart) {
+                context.commit('addOneItemToProductInCart', productInCart.id)
+            } else {
+                context.commit('addProductToCart', product)
+            }
+
         },
         removeFromCart(context, productId) {
             context.commit('removeFromCart', productId)
@@ -127,7 +121,15 @@ export default new Vuex.Store({
             context.commit('clearCart')
         },
         deleteProduct(context, productId) {
-            context.commit('deleteProduct', productId)
+
+            context.commit('setLoading', true)
+
+            axios.delete(`${API_URL}products/${productId}`)
+                .catch(error => context.commit('setError', error))
+                .finally(() => {
+                    context.dispatch('fetchStores')
+                })
+
         }
     },
     modules: {

@@ -60,7 +60,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('getStores')
+    this.$store.dispatch('fetchStores')
   },
   components: { StoreDetail, Loading, AddButton, ProductForm, StoreForm }
 }

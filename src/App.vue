@@ -1,9 +1,14 @@
 <template>
+  <!---->
   <Header :user='user' />
+  <!---->
   <main class='main'>
     <router-view />
   </main>
+  <!---->
   <Footer />
+  <!---->
+  <Notification v-if='this.$store.getters.getNotification'/>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
@@ -13,12 +18,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // ----------------------------------------------
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import Notification from './components/Notification.vue'
 
 export default {
   name: 'App',
   components: {
     Footer,
-    Header
+    Header,
+    Notification
   },
   data() {
     return {
@@ -34,10 +41,10 @@ body {
 }
 
 :root {
-  --primary-bg: #e7e5e4;
-  --primary-text: #000;
-  --secondary-bg: #fff;
-  --secondary-text: #000;
+  --primary-bg: #e01a10;
+  --primary-text: #fff;
+  --secondary-bg: #ff6347;
+  --secondary-text: #fff;
 }
 
 .header {
@@ -45,17 +52,18 @@ body {
   padding: 0;
   width: 100%;
   height: 6vh;
-  background-color: var(--secondary-bg);
-  color: var(--secondary-text);
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
 }
 
 .main {
+  cursor: default;
   margin: 0;
   padding: 1vh 1rem;
   width: 100%;
   min-height: 88vh;
-  background-color: var(--primary-bg);
-  color: var(--primary-text);
+  background-color: #e1e1e1;
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,8 +74,34 @@ body {
   padding: 0;
   width: 100%;
   height: 6vh;
-  background-color: var(--secondary-bg);
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+.button {
+  border-radius: 5px;
+  padding: .3rem .7rem;
+  transition: all 1s;
+  border: none;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.button__primary {
+  background: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+.button__secondary {
+  background: var(--secondary-bg);
   color: var(--secondary-text);
+}
+
+.button__light {
+  background: #aeaeae;
+  color: #fff;
 }
 
 .cursor-pointer {
@@ -106,9 +140,9 @@ body {
 .flash {
   -webkit-animation-name: flash;
   animation-name: flash;
-  -webkit-animation-duration: 3s;
+  -webkit-animation-duration: 5s;
   -webkit-animation-iteration-count: infinite;
-  animation-duration: 3s;
+  animation-duration: 5s;
   animation-iteration-count: infinite;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;

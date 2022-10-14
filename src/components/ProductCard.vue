@@ -1,18 +1,18 @@
 <template>
-  <div class='card px-2 py-3 border border-secondary rounded bg-light shadow'>
+  <div class='card px-2 py-3 rounded shadow'>
     <h5 class='title'>{{product.name}}</h5>
     <img :src='product.image' class='image' loading='lazy'>
     <h5 class='price'>${{product.price - (product.price * product.discount / 100)}}</h5>
     <div class='row justify-content-center align-items-stretch'>
       <div class='col-6'>
-        <button class='btn btn-dark'>
+        <button class='button button__secondary'>
           <router-link :to='`/product/${storeId}/${product.id}`' class='text-white text-decoration-none'>
             Detalle
           </router-link>
         </button>
       </div>
       <div class='col-6'>
-        <button class='btn btn-primary' @click='addToCart(product)'>Agregar</button>
+        <button class='button button__primary' @click='addToCart(product)'>Agregar</button>
       </div>
     </div>
   </div>
@@ -34,6 +34,7 @@ export default {
   methods: {
     addToCart(product) {
       this.$store.dispatch('addToCart', product)
+      this.$store.dispatch('setNotification', 'Se ha agregado ' + product.name)
     }
   }
 }
@@ -47,6 +48,13 @@ export default {
   align-items: center;
   width: 200px;
   min-height: 200px;
+  transition: all 1s;
+  background: #f5f5f5;
+  border: 1px solid #000;
+}
+
+.card:hover{
+  transform: translateY(-5px);
 }
 
 @media (max-width: 768px) {

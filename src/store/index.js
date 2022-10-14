@@ -9,7 +9,8 @@ export default new Vuex.Store({
         stores: [],
         user: null,
         error: null,
-        loading: true
+        loading: false,
+        notification: ''
     },
     getters: {
         getCart: state => { return state.cart },
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         getUser: state => { return state.user },
         getError: state => { return state.error },
         getLoading: state => { return state.loading },
+        getNotification: state => { return state.notification },
     },
     mutations: {
         setCart(state, payload) {
@@ -37,6 +39,9 @@ export default new Vuex.Store({
         setLoading(state, payload) {
             state.loading = payload
         },
+        setNotification(state, payload) {
+            state.notification = payload
+        },
         addOneItemToProductInCart(state, payload) {
             state.cart.map(product => product.id === payload && product.qty++)
         },
@@ -51,18 +56,26 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        setLoading(context, isLoading) {
-            context.commit('setLoading', isLoading)
-        },
         setError(context, error) {
             context.commit('setError', error)
         },
         setUser(context, user) {
             context.commit('setUser', user)
         },
+        setNotification(context, message) {
+            context.commit('setNotification', message)
+        },
+        startLoading(context) {
+            context.commit('setLoading', true)
+        },
+        finishLoading(context) {
+            context.commit('setLoading', false)
+        },
         fetchStores(context) {
 
-            context.commit('setLoading', true)
+            context.commit('setNotification', 'Cargando')
+
+            context.dispatch('startLoading')
 
             axios.get(`${API_URL}stores`)
                 .then(response => {
@@ -79,7 +92,7 @@ export default new Vuex.Store({
                         })
                         .finally(() => {
                             context.commit('setStores', stores)
-                            context.commit('setLoading', false)
+                            context.dispatch('finishLoading')
                         })
 
                 })
@@ -87,20 +100,20 @@ export default new Vuex.Store({
         },
         addProduct(context, product) {
 
-            context.commit('setLoading', true)
+            context.dispatch('startLoading')
 
             axios.post(`${API_URL}products`, product)
                 .catch(error => context.commit('setError', error))
-                .finally(() => context.commit('setLoading', false))
+                .finally(() => context.dispatch('finishLoading'))
 
         },
         addStore(context, store) {
 
-            context.commit('setLoading', true)
+            context.dispatch('startLoading')
 
             axios.post(`${API_URL}stores`, store)
                 .catch(error => context.commit('setError', error))
-                .finally(() => context.commit('setLoading', false))
+                .finally(() => context.dispatch('finishLoading'))
 
         },
         addToCart(context, product) {
@@ -122,12 +135,13 @@ export default new Vuex.Store({
         },
         deleteProduct(context, productId) {
 
-            context.commit('setLoading', true)
+            context.dispatch('startLoading')
 
             axios.delete(`${API_URL}products/${productId}`)
                 .catch(error => context.commit('setError', error))
                 .finally(() => {
                     context.dispatch('fetchStores')
+                    context.dispatch('finishLoading')
                 })
 
         }

@@ -30,10 +30,10 @@
         <h4>Total: ${{this.$store.getters.getCartSubtotal + this.shippingCost}}</h4>
         <div class='row align-items-center justify-content-center'>
           <div class='col-12 my-2 my-md-0 col-md-3'>
-            <button class='w-100 btn btn-secondary mt-3 text-white' @click='goBack()'>Volver</button>
+            <button class='w-100 button button__light mt-3 text-white' @click='goBack()'>Volver</button>
           </div>
           <div class='col-12 my-2 my-md-0 col-md-3'>
-            <button class='w-100 btn btn-primary mt-3 text-white' @click='purchase()'>Finalizar compra</button>
+            <button class='w-100 button button__primary mt-3 text-white' @click='purchase()'>Finalizar compra</button>
           </div>
         </div>
       </div>

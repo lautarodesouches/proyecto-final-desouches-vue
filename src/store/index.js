@@ -5,7 +5,7 @@ import { API_URL } from '../utils/api.js'
 // -----------------------------------------------
 export default new Vuex.Store({
     state: {
-        cart: [],
+        cart: JSON.parse(localStorage.getItem('cart')) || [],
         stores: [],
         user: null,
         error: null,
@@ -45,6 +45,9 @@ export default new Vuex.Store({
         addOneItemToProductInCart(state, payload) {
             state.cart.map(product => product.id === payload && product.qty++)
         },
+        removeOneItemToProductInCart(state, payload) {
+            state.cart.map(product => product.id === payload && product.qty--)
+        },
         addProductToCart(state, payload) {
             state.cart.push({ ...payload, qty: 1 })
         },
@@ -56,6 +59,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        saveCart(context) {
+            localStorage.setItem('cart', JSON.stringify(context.getters.getCart))
+        },
         closeNotification(context) {
             context.commit('setNotification', '')
         },
@@ -127,12 +133,23 @@ export default new Vuex.Store({
                 context.commit('addProductToCart', product)
             }
 
+            context.commit('setNotification', 'Se ha agregado ' + product.name)
+            context.dispatch('saveCart')
+
         },
-        removeFromCart(context, productId) {
-            context.commit('removeFromCart', productId)
+        removeOneItemToProductInCart(context, product) {
+            context.commit('removeOneItemToProductInCart', product.id)
+            context.commit('setNotification', 'Se ha quitado ' + product.name)
+            context.dispatch('saveCart')
+        },
+        removeFromCart(context, product) {
+            context.commit('removeFromCart', product.id)
+            context.commit('setNotification', 'Se quitado ' + product.name)
+            context.dispatch('saveCart')
         },
         clearCart(context) {
             context.commit('clearCart')
+            context.dispatch('saveCart')
         },
         deleteProduct(context, productId) {
 
@@ -146,8 +163,5 @@ export default new Vuex.Store({
                 })
 
         }
-    },
-    modules: {
-
     }
 })

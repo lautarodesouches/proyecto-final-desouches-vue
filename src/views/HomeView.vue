@@ -29,7 +29,7 @@ import Loading from '@/components/Loading.vue'
 import AddButton from '@/components/AddButton.vue'
 import ProductForm from '@/components/ProductForm.vue'
 import StoreForm from '../components/StoreForm.vue'
-
+// ---------------------------------------------------------
 export default {
   name: 'HomeView',
   data() {

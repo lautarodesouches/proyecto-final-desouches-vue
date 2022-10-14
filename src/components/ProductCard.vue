@@ -12,16 +12,18 @@
         </router-link>
       </div>
       <div class='col-6'>
-        <button class='button button__primary' @click='addToCart(product)'>Agregar</button>
+        <qty-manager :qty='productInCartQty' :product='product' />
       </div>
     </div>
+    <div v-if='productInCartQty' class='qty fadeIn'>{{productInCartQty}}</div>
   </div>
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
+import QtyManager from "./QtyManager.vue";
 // -------------------------------------------
 export default {
-  name: 'ProductCard',
+  name: "ProductCard",
   props: {
     storeId: String,
     product: Object
@@ -31,17 +33,18 @@ export default {
       price: this.product.price - (this.product.price * this.product.discount / 100)
     }
   },
-  methods: {
-    addToCart(product) {
-      this.$store.dispatch('addToCart', product)
-      this.$store.dispatch('setNotification', 'Se ha agregado ' + product.name)
+  computed: {
+    productInCartQty() {
+      return this.$store.getters.getCart.find(el => el.id === this.product.id)?.qty;
     }
-  }
+  },
+  components: { QtyManager }
 }
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -55,20 +58,9 @@ export default {
 
 .card:hover {
   color: #fff;
-  border: none;
+  border: 1px solid var(--primary-bg);
   transform: translateY(-5px);
   background-color: var(--primary-bg);
-}
-
-.card:hover .button__primary {
-  background-color: #fff;
-  color: var(--primary-bg);
-}
-
-@media (max-width: 768px) {
-  .card {
-    width: 100%;
-  }
 }
 
 .title,
@@ -83,5 +75,34 @@ export default {
   max-height: 100px;
   border-radius: 5px;
   margin: 1rem 0;
+
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+}
+</style>
+
+<style>
+.qty {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: #000;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.card:hover .button__primary,
+.card:hover .button__plus {
+  background-color: #fff;
+  color: var(--primary-bg);
 }
 </style>

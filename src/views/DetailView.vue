@@ -6,6 +6,7 @@
     <img :src='product.image' class='image'>
     <h5 class='text'>Precio: ${{product?.price - (product?.price * product?.discount / 100)}}</h5>
     <h5 class='text'>Ventas: {{product?.sales}}</h5>
+    <h4 class='text' v-if='productInCartQty'>Cantidad en carrito: {{productInCartQty}}</h4>
     <div class='row align-items-center justify-content-center mt-4'>
       <div class='col-12 my-2 my-md-0 col-md-4'>
         <router-link to='/' class='text-white text-decoration-none'>
@@ -18,7 +19,9 @@
         <button class='w-100 button button__secondary' @click='edit()'>Editar</button>
       </div>
       <div class='col-12 my-2 my-md-0 col-md-4'>
-        <button class='w-100 button button__primary' @click='addToCart(product)'>Agregar</button>
+        <QtyManager v-if='productInCartQty' :qty='productInCartQty' :product='product' />
+        <button v-if='!productInCartQty' class='w-100 button button__primary'
+          @click='addToCart(product)'>Agregar</button>
       </div>
     </div>
   </div>
@@ -40,6 +43,7 @@ import Loading from '@/components/Loading.vue'
 import ProductForm from '@/components/ProductForm.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import DeleteIcon from '@/components/DeleteIcon.vue'
+import QtyManager from '@/components/QtyManager.vue'
 // -------------------------------------------
 export default {
   name: 'DetailView',
@@ -55,6 +59,11 @@ export default {
     axios.get(`${API_URL}products/${this.$route.params.productId}`)
       .then(response => this.product = response.data)
       .catch(error => this.status = error.message)
+  },
+  computed: {
+    productInCartQty() {
+      return this.$store.getters.getCart.find(el => el.id === this.product.id)?.qty;
+    }
   },
   methods: {
     edit() {
@@ -89,7 +98,7 @@ export default {
       this.$store.dispatch('addToCart', product)
     },
   },
-  components: { Loading, ProductForm, ConfirmModal, DeleteIcon }
+  components: { Loading, ProductForm, ConfirmModal, DeleteIcon, QtyManager }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

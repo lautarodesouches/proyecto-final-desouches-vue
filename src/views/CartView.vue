@@ -4,7 +4,7 @@
       <div>
         <h2>Carrito</h2>
       </div>
-      <div class='my-5'>
+      <div class='my-5 w-100'>
         <div class='row text-center mb-3'>
           <div class='col-12 col-md-2'>
             <h5>Nombre</h5>
@@ -63,6 +63,7 @@ export default {
     },
     purchase() {
       this.$store.dispatch('clearCart')
+      this.$store.dispatch('setNotification', 'Gracias por tu compra')
     }
   },
   components: { CartItem }

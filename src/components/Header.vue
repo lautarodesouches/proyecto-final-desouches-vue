@@ -5,7 +5,7 @@
         <h1 class='title'>PeticiónIpsoFacto</h1>
       </router-link>
     </div>
-    <div class='col-6 col-md-3 text-end' v-if='this.$store.getters.getUser'>
+    <div class='col-6 col-md-3 text-end fadeIn' v-if='this.$store.getters.getUser'>
       <div class='row justify-content-center align-items-center'>
         <div class='col-4'>
           <router-link to='/cart'>

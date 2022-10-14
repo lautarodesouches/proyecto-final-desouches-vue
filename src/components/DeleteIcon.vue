@@ -1,6 +1,5 @@
 <template>
-  <span class='rounded p-1 bg-danger cursor-pointer' v-if='this.$store.getters.getUser.admin'
-    @click='onclick()'>
+  <span class='rounded p-1 bg-danger cursor-pointer' v-if='this.$store.getters.getUser.admin' @click='onclick()'>
     <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='white' class='bi bi-trash3-fill'
       viewBox='0 0 16 16'>
       <path
@@ -20,4 +19,5 @@ export default {
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
+
 </style>

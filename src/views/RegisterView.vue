@@ -28,19 +28,24 @@
         {{repeatPassword.error}}</small>
     </div>
     <div class='d-flex justify-content-center'>
-      <button type='submit' class='btn btn-primary'>Registrarse</button>
+      <button type='submit' class='btn btn-primary' v-if='!this.$store.getters.getLoading'>Registrarse</button>
     </div>
     <div class='mt-4 text-center'>
-      <span>Tenés cuenta? <router-link to='/auth/login' class='text-primary text-decoration-none fw-bold'>Ingresar
-        </router-link></span>
+      <span>
+        Tenés cuenta?
+        <router-link to='/auth/login' class='text-primary text-decoration-none fw-bold'>Ingresar</router-link>
+      </span>
     </div>
   </form>
+  <!---->
+  <Loading v-if='this.$store.getters.getLoading' />
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
 // -------------------------------------------
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
+import Loading from '@/components/Loading.vue'
 // -------------------------------------------
 export default {
   name: 'RegisterView',
@@ -51,85 +56,73 @@ export default {
       username: { value: '', error: '' },
       password: { value: '', error: '' },
       repeatPassword: { value: '', error: '' }
-    }
+    };
   },
   methods: {
     resetValues() {
-      this.firstname = ''
-      this.lastname = ''
-      this.username.value = ''
-      this.password.value = ''
-      this.repeatPassword.value = ''
+      this.firstname = '';
+      this.lastname = '';
+      this.username.value = '';
+      this.password.value = '';
+      this.repeatPassword.value = '';
     },
     resetErrors() {
-      this.username.error = ''
-      this.password.error = ''
-      this.repeatPassword.error = ''
+      this.username.error = '';
+      this.password.error = '';
+      this.repeatPassword.error = '';
     },
     addUser() {
-
+      this.$store.dispatch('startLoading');
       let newUser = {
         firstname: this.firstname,
         lastname: this.lastname,
         username: this.username.value,
         password: this.password.value
-      }
-
+      };
       axios.get(`${API_URL}users`)
         .then(res => {
-
-          if (res.data.find(user => user.username === newUser.username)) return this.username.error = 'El usuario ya existe'
-
+          if (res.data.find(user => user.username === newUser.username))
+            return this.username.error = 'El usuario ya existe';
           axios.post(`${API_URL}users`, newUser)
             .then(res => {
-
               if (res.status === 201) {
-
                 localStorage.setItem('user', JSON.stringify({
                   username: res.data.username,
                   id: res.data.id,
                   admin: res.data.admin
-                }))
-
-                this.resetValues()
-
-                this.$router.push('/')
-
+                }));
+                this.resetValues();
+                this.$router.push('/');
               }
-
-            })
+            });
         })
-        .catch(error => console.warn(error))
-
+        .catch(error => {
+          this.$store.dispatch('setNotification', error.message)
+          this.$store.dispatch('finishLoading')
+        })
     },
     validateForm() {
-
-      this.resetErrors()
-
-      let required = 'El campo es requerido'
-
-      if (this.username.value === '') return this.username.error = required
-
-      if (this.password.value === '') return this.password.error = required
-
-      if (this.repeatPassword.value === '') return this.repeatPassword.error = required
-
+      this.resetErrors();
+      let required = 'El campo es requerido';
+      if (this.username.value === '')
+        return this.username.error = required;
+      if (this.password.value === '')
+        return this.password.error = required;
+      if (this.repeatPassword.value === '')
+        return this.repeatPassword.error = required;
       if (!RegExp('^[a-z0-9_-]{3,10}$').test(this.username.value)) {
-        return this.username.error = 'El usuario solo debe contener letras y numeros. Y debe contener al menos 3 carácteres'
+        return this.username.error = 'El usuario solo debe contener letras y numeros. Y debe contener al menos 3 carácteres';
       }
-
       if (!RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{4,}$').test(this.password.value)) {
-        return this.password.error = 'La contraseña debe tener mínimo cuatro caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial'
+        return this.password.error = 'La contraseña debe tener mínimo cuatro caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial';
       }
-
       if (this.password.value !== this.repeatPassword.value) {
-        return this.repeatPassword.error = 'Las contraseñas no coinciden'
+        return this.repeatPassword.error = 'Las contraseñas no coinciden';
       }
-
-      this.addUser()
-
+      this.addUser();
     }
-  }
+  },
+  components: { Loading }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

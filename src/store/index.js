@@ -56,6 +56,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        closeNotification(context) {
+            context.commit('setNotification', '')
+        },
         setError(context, error) {
             context.commit('setError', error)
         },
@@ -72,8 +75,6 @@ export default new Vuex.Store({
             context.commit('setLoading', false)
         },
         fetchStores(context) {
-
-            context.commit('setNotification', 'Cargando')
 
             context.dispatch('startLoading')
 

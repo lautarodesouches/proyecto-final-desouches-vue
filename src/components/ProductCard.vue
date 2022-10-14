@@ -5,11 +5,11 @@
     <h5 class='price'>${{product.price - (product.price * product.discount / 100)}}</h5>
     <div class='row justify-content-center align-items-stretch'>
       <div class='col-6'>
-        <button class='button button__secondary'>
-          <router-link :to='`/product/${storeId}/${product.id}`' class='text-white text-decoration-none'>
+        <router-link :to='`/product/${storeId}/${product.id}`' class='text-white text-decoration-none'>
+          <button class='button button__secondary'>
             Detalle
-          </router-link>
-        </button>
+          </button>
+        </router-link>
       </div>
       <div class='col-6'>
         <button class='button button__primary' @click='addToCart(product)'>Agregar</button>
@@ -53,8 +53,16 @@ export default {
   border: 1px solid #000;
 }
 
-.card:hover{
+.card:hover {
+  color: #fff;
+  border: none;
   transform: translateY(-5px);
+  background-color: var(--primary-bg);
+}
+
+.card:hover .button__primary {
+  background-color: #fff;
+  color: var(--primary-bg);
 }
 
 @media (max-width: 768px) {

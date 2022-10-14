@@ -1,9 +1,9 @@
 <template>
-  <div class='notification fadeIn'>
+  <div class='notification fadeIn' @click='closeButton'>
     <div class='notification__content'>
       <h5 class='notification__message'>{{this.$store.getters.getNotification}}</h5>
       <div class='notification__button__container'>
-        <button class='notification__button' @click='closeButton'>X</button>
+        <button class='notification__button'>X</button>
       </div>
     </div>
   </div>
@@ -15,19 +15,20 @@ export default {
   name: 'NewNotification',
   methods: {
     closeButton() {
-      this.$store.dispatch('setNotification', '')
+      this.$store.dispatch('closeNotification')
     }
   },
   created() {
-    /* setTimeout(() => {
-      this.$store.dispatch('setNotification', '')
-    }, 5000) */
+    setTimeout(() => {
+      this.$store.dispatch('closeNotification')
+    }, 5000)
   }
 }
 </script>
 <!------------------------------------------------------------------------------------------->
 <style scoped>
 .notification {
+  cursor: pointer;
   position: fixed;
   border-radius: 5px;
   background-color: #f8f8f8;
@@ -45,6 +46,8 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
+  padding: 5px;
+  padding-right: 25px;
 }
 
 .notification__message {
@@ -55,6 +58,7 @@ export default {
 .notification__button__container {
   position: absolute;
   right: 0;
+  width: 20px;
 }
 
 .notification__button {

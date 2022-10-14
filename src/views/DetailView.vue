@@ -8,17 +8,17 @@
     <h5 class='text'>Ventas: {{product?.sales}}</h5>
     <div class='row align-items-center justify-content-center mt-4'>
       <div class='col-12 my-2 my-md-0 col-md-4'>
-        <button class='w-100 btn btn-danger'>
-          <router-link to='/' class='text-white text-decoration-none'>
+        <router-link to='/' class='text-white text-decoration-none'>
+          <button class='w-100 button button__light'>
             Volver
-          </router-link>
-        </button>
+          </button>
+        </router-link>
       </div>
       <div class='col-12 my-2 my-md-0 col-md-4' v-if='this.$store.getters.getUser.admin'>
-        <button class='w-100 btn btn-dark' @click='edit()'>Editar</button>
+        <button class='w-100 button button__secondary' @click='edit()'>Editar</button>
       </div>
       <div class='col-12 my-2 my-md-0 col-md-4'>
-        <button class='w-100 btn btn-primary' @click='addToCart(product)'>Agregar</button>
+        <button class='w-100 button button__primary' @click='addToCart(product)'>Agregar</button>
       </div>
     </div>
   </div>

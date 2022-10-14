@@ -12,11 +12,14 @@
       <h4>{{this.$store.getters.getUser?.lastname}}, {{this.$store.getters.getUser?.firstname}}</h4>
     </div>
     <div class='row align-items-center justify-content-around mt-5'>
-      <div class='col-6' v-if='this.$store.getters.getUser.admin'>
-        <button class='w-100 btn btn-secondary' @click='openForm()'>Editar</button>
+      <div class='col-4' v-if='this.$store.getters.getUser.admin'>
+        <button class='w-100 button button__light' @click='goBack()'>Volver</button>
       </div>
-      <div class='col-6'>
-        <button class='w-100 btn btn-danger' @click='logout()'>Cerrar sesión</button>
+      <div class='col-4' v-if='this.$store.getters.getUser.admin'>
+        <button class='w-100 button button__secondary' @click='openForm()'>Editar</button>
+      </div>
+      <div class='col-4'>
+        <button class='w-100 button button__primary' @click='logout()'>Cerrar sesión</button>
       </div>
     </div>
   </div>
@@ -49,10 +52,10 @@
       </div>
       <div class='row justify-content-center mt-4'>
         <div class='col-6'>
-          <button class='btn btn-danger w-100' @click='cancel()'>Cancelar</button>
+          <button class='button button__light w-100' @click='cancel()'>Cancelar</button>
         </div>
         <div class='col-6'>
-          <button class='btn btn-primary w-100' @click='edit()'>Editar</button>
+          <button class='button button__primary w-100' @click='edit()'>Editar</button>
         </div>
       </div>
       <div v-if='form?.status'>
@@ -78,6 +81,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      this.$router.push('/')
+    },
     logout() {
       this.$store.dispatch('setUser', null)
       this.$router.push('/auth/login')
@@ -93,7 +99,7 @@ export default {
 
       axios.put(`${API_URL}users/${this.$store.getters.getUser.id}`, this.form)
         .then(() => this.isEditing = false)
-        .catch(error => console.warn(error))
+        .catch(error => this.$store.dispatch('setNotification', error.message))
 
     },
     cancel() {

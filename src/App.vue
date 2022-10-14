@@ -8,7 +8,7 @@
   <!---->
   <Footer />
   <!---->
-  <Notification v-if='this.$store.getters.getNotification'/>
+  <Notification v-if='this.$store.getters.getNotification' />
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
@@ -43,7 +43,7 @@ body {
 :root {
   --primary-bg: #e01a10;
   --primary-text: #fff;
-  --secondary-bg: #ff6347;
+  --secondary-bg: #f36316;
   --secondary-text: #fff;
 }
 

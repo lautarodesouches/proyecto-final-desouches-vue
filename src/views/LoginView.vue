@@ -1,5 +1,6 @@
 <template>
-  <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'>
+  <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'
+    v-if='!this.$store.getters.getLoading'>
 
     <div class='bg-dark rounded w-100 text-center text-white'>
       <h5>Credenciales</h5>
@@ -38,10 +39,14 @@
       <button type='submit' class='btn btn-primary'>Ingresar</button>
     </div>
     <div class='mt-4 text-center'>
-      <span>No tenés cuenta? <router-link to='/auth/register' class='text-primary text-decoration-none fw-bold'>
-          Registrarme</router-link></span>
+      <span>
+        No tenés cuenta?
+        <router-link to='/auth/register' class='text-primary text-decoration-none fw-bold'>Registrarme</router-link>
+      </span>
     </div>
   </form>
+  <!---->
+  <Loading v-if='this.$store.getters.getLoading' />
 </template>
 <!------------------------------------------------------------------------------------------->
 <script>
@@ -49,49 +54,47 @@
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
 // ----------------------------------------------------
+import Loading from '@/components/Loading.vue'
+// ----------------------------------------------------
 export default {
   name: 'LoginView',
-  props: {
-  },
+  props: {},
   data() {
     return {
       username: { value: 'test', error: '' },
       password: { value: 'test', error: '' }
-    }
+    };
   },
   methods: {
     resetValues() {
-      this.username.value = ''
-      this.password.value = ''
+      this.username.value = '';
+      this.password.value = '';
     },
     resetErrors() {
-      this.username.error = ''
-      this.password.error = ''
+      this.username.error = '';
+      this.password.error = '';
     },
     validateForm() {
-
-      this.resetErrors()
-
+      this.resetErrors();
+      this.$store.dispatch('startLoading');
       axios.get(`${API_URL}users`)
         .then(response => {
-
-          let user = response.data.find(user => user.username === this.username.value)
-
-          if (!user) return this.username.error = 'Usuario no existe'
-
-          if (this.password.value !== user.password) return this.password.error = 'Contraseña inválida'
-
-          this.$store.dispatch('setUser', user)
-
-          this.resetValues()
-
-          this.$router.push('/')
-
+          let user = response.data.find(user => user.username === this.username.value);
+          if (!user)
+            return this.username.error = 'Usuario no existe';
+          if (this.password.value !== user.password)
+            return this.password.error = 'Contraseña inválida';
+          this.$store.dispatch('setUser', user);
+          this.resetValues();
+          this.$router.push('/');
         })
-        .catch(error => console.warn(error))
-
+        .catch(error => {
+          this.$store.dispatch('setNotification', error.message)
+          this.$store.dispatch('finishLoading')
+        })
     }
-  }
+  },
+  components: { Loading }
 }
 </script>
 <!------------------------------------------------------------------------------------------->

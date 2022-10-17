@@ -67,30 +67,40 @@ export default {
   },
   methods: {
     resetValues() {
-      this.username.value = '';
-      this.password.value = '';
+      this.username.value = ''
+      this.password.value = ''
     },
     resetErrors() {
-      this.username.error = '';
-      this.password.error = '';
+      this.username.error = ''
+      this.password.error = ''
+    },
+    finishLoading() {
+      this.$store.dispatch('finishLoading')
     },
     validateForm() {
       this.resetErrors();
-      this.$store.dispatch('startLoading');
+      this.$store.dispatch('startLoading')
       axios.get(`${API_URL}users`)
         .then(response => {
-          let user = response.data.find(user => user.username === this.username.value);
-          if (!user)
-            return this.username.error = 'Usuario no existe';
-          if (this.password.value !== user.password)
-            return this.password.error = 'Contraseña inválida';
-          this.$store.dispatch('setUser', user);
-          this.resetValues();
-          this.$router.push('/');
+          let user = response.data.find(user => user.username === this.username.value)
+
+          if (!user) {
+            this.finishLoading()
+            return this.username.error = 'Usuario no existe'
+          }
+
+          if (this.password.value !== user.password) {
+            this.finishLoading()
+            return this.password.error = 'Contraseña inválida'
+          }
+
+          this.$store.dispatch('setUser', user)
+          this.resetValues()
+          this.$router.push('/')
         })
         .catch(error => {
           this.$store.dispatch('setNotification', error.message)
-          this.$store.dispatch('finishLoading')
+          this.finishLoading()
         })
     }
   },

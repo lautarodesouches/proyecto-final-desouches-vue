@@ -1,5 +1,6 @@
 <template>
-  <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'>
+  <form class='form bg-white rounded p-3 my-5 fadeIn' @submit.prevent='validateForm()'
+    v-if='!this.$store.getters.getLoading'>
     <div class='form-group mb-3'>
       <label for='firstname'>Nombre</label>
       <input type='text' class='my-2 form-control' id='firstname' placeholder='Nombre' v-model='firstname'>
@@ -71,34 +72,47 @@ export default {
       this.password.error = '';
       this.repeatPassword.error = '';
     },
+    finishLoading() {
+      this.$store.dispatch('finishLoading')
+    },
     addUser() {
-      this.$store.dispatch('startLoading');
+
+      this.$store.dispatch('startLoading')
+
       let newUser = {
         firstname: this.firstname,
         lastname: this.lastname,
         username: this.username.value,
         password: this.password.value
-      };
+      }
+
       axios.get(`${API_URL}users`)
         .then(res => {
-          if (res.data.find(user => user.username === newUser.username))
-            return this.username.error = 'El usuario ya existe';
+
+          if (res.data.find(user => user.username === newUser.username)) {
+
+            return this.username.error = 'El usuario ya existe'
+          }
           axios.post(`${API_URL}users`, newUser)
             .then(res => {
-              if (res.status === 201) {
-                localStorage.setItem('user', JSON.stringify({
-                  username: res.data.username,
-                  id: res.data.id,
-                  admin: res.data.admin
-                }));
-                this.resetValues();
-                this.$router.push('/');
-              }
-            });
+
+              if (res.status !== 201) throw new Error('Ha ocurrido un error')
+
+              localStorage.setItem('user', JSON.stringify({
+                username: res.data.username,
+                id: res.data.id,
+                admin: res.data.admin
+              }));
+              this.resetValues()
+              this.finishLoading()
+              this.$router.push('/')
+
+            })
+
         })
         .catch(error => {
           this.$store.dispatch('setNotification', error.message)
-          this.$store.dispatch('finishLoading')
+          this.finishLoading()
         })
     },
     validateForm() {

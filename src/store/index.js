@@ -46,7 +46,10 @@ export default new Vuex.Store({
             state.cart.map(product => product.id === payload && product.qty++)
         },
         removeOneItemToProductInCart(state, payload) {
-            state.cart.map(product => product.id === payload && product.qty--)
+            let productInCart = state.cart.find(product => product.id === payload)
+            
+            if (productInCart.qty === 1) state.cart = state.cart.filter(product => product.id !== productInCart.id)
+            else state.cart.map(product => product.id === payload && product.qty--)
         },
         addProductToCart(state, payload) {
             state.cart.push({ ...payload, qty: 1 })

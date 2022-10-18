@@ -10,6 +10,11 @@ export const routes = [
         component: () => import('../views/CartView.vue')
     },
     {
+        path: '/checkout',
+        name: 'Checkout',
+        component: () => import('../views/CheckoutView.vue')
+    },
+    {
         path: '/auth',
         name: 'Auth',
         children: [

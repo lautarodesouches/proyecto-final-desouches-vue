@@ -24,7 +24,7 @@
     </div>
 
     <div class='form-group my-3'>
-      <label for='user'>Usuario</label>
+      <label for='loginUser'>Usuario</label>
       <input type='text' class='my-2 form-control' id='loginUser' placeholder='Usuario' maxlength='10'
         v-model='username.value' required>
       <small id='loginUserHelp' class='form-text text-danger' v-if='username.error'>* {{username.error}}</small>

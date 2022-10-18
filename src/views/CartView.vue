@@ -33,7 +33,7 @@
             <button class='w-100 button button__light mt-3' @click='goBack()'>Volver</button>
           </div>
           <div class='col-12 my-2 my-md-0 col-md-3'>
-            <button class='w-100 button button__primary mt-3 text-white' @click='purchase()'>Finalizar compra</button>
+            <button class='w-100 button button__primary mt-3 text-white' @click='goCheckout()'>CHECKOUT</button>
           </div>
         </div>
       </div>
@@ -61,9 +61,8 @@ export default {
     goBack() {
       this.$router.push('/')
     },
-    purchase() {
-      this.$store.dispatch('clearCart')
-      this.$store.dispatch('setNotification', 'Gracias por tu compra')
+    goCheckout() {
+      this.$router.push('/checkout')
     }
   },
   components: { CartItem }

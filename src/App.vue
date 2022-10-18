@@ -52,8 +52,8 @@ body {
   padding: 0;
   width: 100%;
   height: 6vh;
-  background-color: var(--primary-bg);
-  color: var(--primary-text);
+  background-color: var(--secondary-bg);
+  color: var(--secondary-text);
 }
 
 .main {
@@ -74,8 +74,8 @@ body {
   padding: 0;
   width: 100%;
   height: 6vh;
-  background-color: var(--primary-bg);
-  color: var(--primary-text);
+  background-color: var(--secondary-bg);
+  color: var(--secondary-text);
 }
 
 .button {

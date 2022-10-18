@@ -104,6 +104,7 @@ export default {
                 admin: res.data.admin
               }));
               this.resetValues()
+              this.$store.dispatch('setNotification', 'Se ha registrado correctamente')
               this.finishLoading()
               this.$router.push('/')
 

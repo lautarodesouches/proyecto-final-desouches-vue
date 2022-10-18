@@ -47,13 +47,14 @@
 <!------------------------------------------------------------------------------------------->
 <script>
 // ---------------------
+import { SHIPPING_COST } from '@/utils/constants'
 import CartItem from '../components/CartItem.vue'
 // ---------------------
 export default {
   name: 'CartView',
   data() {
     return {
-      shippingCost: 5,
+      shippingCost: SHIPPING_COST,
       cart: [],
     }
   },

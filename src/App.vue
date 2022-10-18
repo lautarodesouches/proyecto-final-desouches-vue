@@ -51,7 +51,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 6vh;
+  min-height: 6vh;
   background-color: var(--secondary-bg);
   color: var(--secondary-text);
 }
@@ -73,7 +73,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 6vh;
+  min-height: 6vh;
   background-color: var(--secondary-bg);
   color: var(--secondary-text);
 }

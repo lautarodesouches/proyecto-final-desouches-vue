@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 // -----------------------------------------------
 import axios from 'axios'
 import { API_URL } from '../utils/api.js'
+import { SHIPPING_COST } from '@/utils/constants.js'
 // -----------------------------------------------
 export default new Vuex.Store({
     state: {
@@ -47,7 +48,7 @@ export default new Vuex.Store({
         },
         removeOneItemToProductInCart(state, payload) {
             let productInCart = state.cart.find(product => product.id === payload)
-            
+
             if (productInCart.qty === 1) state.cart = state.cart.filter(product => product.id !== productInCart.id)
             else state.cart.map(product => product.id === payload && product.qty--)
         },
@@ -126,6 +127,22 @@ export default new Vuex.Store({
                 .finally(() => context.dispatch('finishLoading'))
 
         },
+        addOrder(context) {
+
+            context.dispatch('startLoading')
+
+            let user = context.getters.getUser
+
+            let date = new Date()
+
+            user.orders.push({ date: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`, total: context.getters.getCartSubtotal + SHIPPING_COST, products: context.getters.getCart })
+
+            context.dispatch('setUser', user)
+
+            axios.put(`${API_URL}users/${context.getters.getUser.id}`, context.getters.getUser)
+                .catch(error => context.commit('setError', error))
+                .finally(() => context.dispatch('finishLoading'))
+        },
         addToCart(context, product) {
 
             let productInCart = context.state.cart.find(productInCart => productInCart.id === product.id)
@@ -165,6 +182,11 @@ export default new Vuex.Store({
                     context.dispatch('finishLoading')
                 })
 
+        },
+        purchase(context) {
+            context.dispatch('addOrder')
+            context.dispatch('clearCart')
+            context.dispatch('setNotification', 'Gracias por tu compra')
         }
     }
 })

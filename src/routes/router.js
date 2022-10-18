@@ -15,6 +15,11 @@ export const routes = [
         component: () => import('../views/CheckoutView.vue')
     },
     {
+        path: '/orders',
+        name: 'Orders',
+        component: () => import('../views/OrdersView.vue')
+    },
+    {
         path: '/auth',
         name: 'Auth',
         children: [

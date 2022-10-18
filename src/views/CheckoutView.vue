@@ -58,8 +58,7 @@ export default {
       this.$router.push('/')
     },
     purchase() {
-      this.$store.dispatch('clearCart')
-      this.$store.dispatch('setNotification', 'Gracias por tu compra')
+      this.$store.dispatch('purchase')
       this.$router.push('/')
     },
     resetErrors() {
